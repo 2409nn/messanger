@@ -1,0 +1,19 @@
+:root {
+    --sidebar__item_svg-background: #D8D8D8;
+    --sidebar__item_svg-gradient: linear-gradient(to bottom, #FFF500, #B42BA6);
+}
+
+.sidebar .sidebar__item svg.active {
+    border-radius: 15px;
+    /* Устанавливаем ширину границы, которая станет градиентной */
+    border: 3px solid transparent;
+
+    /* Используем два градиента (даже для сплошного цвета) */
+    background-image:
+            linear-gradient(var(--sidebar__item_svg-background), var(--sidebar__item_svg-background)),
+            var(--sidebar__item_svg-gradient);
+
+    /* Первый градиент ограничиваем контентом, второй — всей областью включая рамку */
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
