@@ -1,11 +1,14 @@
 <script setup>
   import sideMenu from "./components/sideMenu.vue"
+  import Chats from "./components/chats.vue"
+
 </script>
 
 <template>
-  <div>
     <side-menu></side-menu>
-  </div>
+    <main>
+      <chats></chats>
+    </main>
 </template>
 
 <style lang="scss" scoped>

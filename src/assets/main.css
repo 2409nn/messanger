@@ -1,19 +1,31 @@
 :root {
     --sidebar__item_svg-background: #D8D8D8;
     --sidebar__item_svg-gradient: linear-gradient(to bottom, #FFF500, #B42BA6);
+    --body-background: #EEEEEE;
+    --main-background-color: rgb(255, 255, 255);
+    --hover-background-color: rgba(0, 0, 0, 0.06);
+    --main-text-color: #1E1E1E;
+    --secondary-text-color: #707070;
 }
 
-.sidebar .sidebar__item svg.active {
-    border-radius: 15px;
-    /* Устанавливаем ширину границы, которая станет градиентной */
-    border: 3px solid transparent;
+body {
+    background-color: var(--body-background);
+}
 
-    /* Используем два градиента (даже для сплошного цвета) */
-    background-image:
-            linear-gradient(var(--sidebar__item_svg-background), var(--sidebar__item_svg-background)),
-            var(--sidebar__item_svg-gradient);
+ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 
-    /* Первый градиент ограничиваем контентом, второй — всей областью включая рамку */
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
+main {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    padding: 0 100px;
+    height: 100vh;
+    color: var(--main-text-color);
+}
+
+section .heading {
+    height: 80px;
 }

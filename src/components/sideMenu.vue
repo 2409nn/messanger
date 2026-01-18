@@ -106,6 +106,12 @@
 </template>
 
 <style scoped lang="scss">
+
+  .sidebar {
+    position: fixed;
+    background-color: var(--body-background);
+  }
+
   .sidebar {
     height: 100vh;
     width: 100px;
@@ -116,20 +122,17 @@
 
     .sidebar__item svg {
       padding: 10px;
+
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &.active {
+        border-radius: 15px;
+        box-shadow: 0 0 0px 3px black;
+      }
     }
-
-
-  }
-
-  ul, li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  svg {
-    width: 40px;
-    height: 40px;
   }
 
   .sidebar__nav {
