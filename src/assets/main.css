@@ -1,11 +1,14 @@
+
 :root {
     --sidebar__item_svg-background: #D8D8D8;
     --sidebar__item_svg-gradient: linear-gradient(to bottom, #FFF500, #B42BA6);
     --body-background: #EEEEEE;
     --main-background-color: rgb(255, 255, 255);
     --hover-background-color: rgba(0, 0, 0, 0.06);
+    --focus-background-color: #F5F5F5;
     --main-text-color: #1E1E1E;
     --secondary-text-color: #707070;
+    --online-sign-background: #53E04E;
 }
 
 body {
