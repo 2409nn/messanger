@@ -1,11 +1,11 @@
 <script setup>
 
+  import { ref } from 'vue'
+
   import user1 from '@/assets/imgs/avatars/user_1.jpg'
   import user2 from '@/assets/imgs/avatars/user_2.jpg'
   import user3 from '@/assets/imgs/avatars/user_3.jpg'
   import user4 from '@/assets/imgs/avatars/user_4.jpg'
-
-  import { ref } from 'vue'
 
   const activeIndex = ref(null);
 
@@ -47,7 +47,7 @@
         </div>
         <div class="recent__info">
           <div class="recent__info-top">
-            <h3 class="recent__info-firstname">{{ user.firstname }}</h3>
+            <p class="recent__info-firstname">{{ user.firstname }}</p>
             <p class="recent__info-time">{{ user.time }}</p>
           </div>
           <p class="recent__info-message">{{ user.message }}</p>

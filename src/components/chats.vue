@@ -4,6 +4,10 @@
 
 </script>
 
+<!-- todo: сделать заглушку если чат не выбран -->
+<!-- todo: сделать объект с сообщениями -->
+<!-- todo: сверстать поле для переписки -->
+
 <template>
   <section class="chats">
     <div class="chats__heading heading">
