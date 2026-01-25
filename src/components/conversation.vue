@@ -1,4 +1,32 @@
 <script setup>
+  import userAvatar1 from '@/assets/imgs/avatars/user_1.jpg'
+  import userAvatar2 from '@/assets/imgs/avatars/user_2.jpg'
+
+  let chatData = {
+      messages: [
+        {'time': '4:27',
+          avatar: userAvatar1,
+          'title': 'Ope',
+          'text': `Gee, its been good news all day. i met someone special today. she's really pretty.
+           i’ll like to talk more about it but it has to be tomorrow. she should grab a drink later.
+
+           Call me if you get this okay.`,
+        },
+        {'time': '4:27',
+          avatar: userAvatar2,
+          'title': 'Me',
+          'text': `Lorem ipsum dolor sit amet consectetur. Dictum sociis fermentum sodales nisl interdum id eget.
+          Eget libero viverra tristique massa fringilla sit..`,
+        },
+        {'time': '4:27',
+          avatar: userAvatar1,
+          'title': 'Ope',
+          'text': `Lorem ipsum dolor sit amet consectetur. Pellentesque sagittis sed dictum lorem. Neque eget faucibus
+          dolor risus posuere vitae sodales. Sit odio morbi dolor egestas sit aliquam velit cum.
+          Pharetra tortor sit vestibulum `,
+        },
+      ]
+  }
 
 </script>
 
@@ -6,10 +34,10 @@
   <section class="conv">
     <div class="conv__heading">
       <div class="conv__userinfo">
-        <div class="conv__userinfo-online online-tag"></div>
         <div class="conv__userinfo-avatar">
           <img src="../assets/imgs/avatars/user_1.jpg" alt="avatar" class="conv__userinfo-image">
         </div>
+        <div class="conv__userinfo-online online-tag"></div>
         <div class="conv__userinfo-title">
           <p class="conv__userinfo-username">Ope</p>
           <p class="conv__userinfo-status">Active</p>
@@ -34,14 +62,68 @@
         </button>
       </div>
     </div>
+    <div class="conv__chat">
+      <div class="conv__messages">
+
+        <div class="conv__message" v-for="message in chatData.messages">
+          <img :src="message.avatar" alt="avatar" class="conv__message-avatar">
+
+          <div class="conv__message__info">
+            <div class="conv__message__info-top">
+              <span class="conv__message__info-top__title">{{ message.title }}</span>
+              <span class="conv__message__info-top__time">{{ message.time }}</span>
+            </div>
+
+            <p class="conv__message__info__text">{{ message.text }}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+<!--    <div class="conv__send">-->
+<!--      <form class="conv__send__form">-->
+<!--        <input type="text" class="conv__send__form-text" placeholder="Type something...">-->
+<!--      </form>-->
+<!--    </div>-->
   </section>
 </template>
 
 <style scoped lang="scss">
 
   .conv {
-    background-color: #d2ff92;
+    background-color: var(--main-background-color);
     grid-column: 5/12;
+
+    &__message {
+      margin: 20px;
+      padding-bottom: 20px;
+      display: flex;
+      gap: 30px;
+
+      &-avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 25px;
+      }
+
+      &__info-top {
+        gap: 20px;
+        display: flex;
+        align-items: center;
+        padding-bottom: 10px;
+
+        &__title {
+          font-weight: 500;
+        }
+
+        &__time {
+          font-weight: 200;
+          color: var(--secondary-text-color);
+          font-size: 12px;
+        }
+      }
+
+    }
 
     &__heading {
       display: flex;
@@ -54,11 +136,10 @@
     &__userinfo {
       display: flex;
       align-items: center;
-      gap: 20px;
 
       &-online {
         position: relative;
-        left: 78px;
+        right: 17px;
         top: 20px;
       }
 
