@@ -10,6 +10,8 @@
   --main-text-color: #1E1E1E;
   --secondary-text-color: #707070;
   --online-sign-background: #53E04E;
+  --divider-border-color: rgba(30, 30, 30, 0.4);
+  --submit-background-color: #EEEEEE;
 }
 
 * {
