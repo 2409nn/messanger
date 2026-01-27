@@ -5,8 +5,6 @@
 </script>
 
 <!-- todo: сделать заглушку если чат не выбран -->
-<!-- todo: сделать объект с сообщениями -->
-<!-- todo: сверстать поле для переписки -->
 
 <template>
   <section class="chats">
@@ -21,7 +19,7 @@
 <style scoped lang="scss">
   .chats {
     grid-column: 1/5;
-    background-color: #e7cfcf;
+    background-color: var(--body-background);
     padding: 20px;
 
     &__title {

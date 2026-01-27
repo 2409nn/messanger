@@ -25,6 +25,69 @@
           dolor risus posuere vitae sodales. Sit odio morbi dolor egestas sit aliquam velit cum.
           Pharetra tortor sit vestibulum `,
         },
+        {'time': '4:27',
+          avatar: userAvatar1,
+          'title': 'Ope',
+          'text': `Gee, its been good news all day. i met someone special today. she's really pretty.
+           i’ll like to talk more about it but it has to be tomorrow. she should grab a drink later.
+
+           Call me if you get this okay.`,
+        },
+        {'time': '4:27',
+          avatar: userAvatar2,
+          'title': 'Me',
+          'text': `Lorem ipsum dolor sit amet consectetur. Dictum sociis fermentum sodales nisl interdum id eget.
+          Eget libero viverra tristique massa fringilla sit..`,
+        },
+        {'time': '4:27',
+          avatar: userAvatar1,
+          'title': 'Ope',
+          'text': `Lorem ipsum dolor sit amet consectetur. Pellentesque sagittis sed dictum lorem. Neque eget faucibus
+          dolor risus posuere vitae sodales. Sit odio morbi dolor egestas sit aliquam velit cum.
+          Pharetra tortor sit vestibulum `,
+        },
+        {'time': '4:27',
+          avatar: userAvatar1,
+          'title': 'Ope',
+          'text': `Gee, its been good news all day. i met someone special today. she's really pretty.
+           i’ll like to talk more about it but it has to be tomorrow. she should grab a drink later.
+
+           Call me if you get this okay.`,
+        },
+        {'time': '4:27',
+          avatar: userAvatar2,
+          'title': 'Me',
+          'text': `Lorem ipsum dolor sit amet consectetur. Dictum sociis fermentum sodales nisl interdum id eget.
+          Eget libero viverra tristique massa fringilla sit..`,
+        },
+        {'time': '4:27',
+          avatar: userAvatar1,
+          'title': 'Ope',
+          'text': `Lorem ipsum dolor sit amet consectetur. Pellentesque sagittis sed dictum lorem. Neque eget faucibus
+          dolor risus posuere vitae sodales. Sit odio morbi dolor egestas sit aliquam velit cum.
+          Pharetra tortor sit vestibulum `,
+        },
+        {'time': '4:27',
+          avatar: userAvatar1,
+          'title': 'Ope',
+          'text': `Gee, its been good news all day. i met someone special today. she's really pretty.
+           i’ll like to talk more about it but it has to be tomorrow. she should grab a drink later.
+
+           Call me if you get this okay.`,
+        },
+        {'time': '4:27',
+          avatar: userAvatar2,
+          'title': 'Me',
+          'text': `Lorem ipsum dolor sit amet consectetur. Dictum sociis fermentum sodales nisl interdum id eget.
+          Eget libero viverra tristique massa fringilla sit..`,
+        },
+        {'time': '4:27',
+          avatar: userAvatar1,
+          'title': 'Ope',
+          'text': `Lorem ipsum dolor sit amet consectetur. Pellentesque sagittis sed dictum lorem. Neque eget faucibus
+          dolor risus posuere vitae sodales. Sit odio morbi dolor egestas sit aliquam velit cum.
+          Pharetra tortor sit vestibulum `,
+        },
       ]
   }
 
@@ -123,9 +186,22 @@
 <style scoped lang="scss">
 
   .conv {
-    display: grid;
     background-color: var(--main-background-color);
+    flex-direction: column;
     grid-column: 5/12;
+    grid-template-rows: 87px auto 87px;
+    display: grid;
+    max-height: 100vh;
+
+    &__chat {
+      overflow-y: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
 
     &__message {
       margin: 20px;
@@ -164,7 +240,6 @@
       background-color: var(--body-background);
       justify-content: space-between;
       padding: 10px 20px;
-      align-self: start;
     }
 
     &__userinfo {
@@ -209,12 +284,13 @@
     &__send {
       background-color: var(--body-background);
       padding: 10px 0;
-      align-self: end;
+      display: flex;
+      margin-top: auto;
 
       &__form {
         display: flex;
         background-color: var(--main-background-color);
-        width: 90%;
+        width: 100%;
         border-radius: 10px;
         margin: auto;
         padding: 10px;
