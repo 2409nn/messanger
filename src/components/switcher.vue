@@ -30,6 +30,9 @@ const setTab = (name) => {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 5px;
+
+    width: 95%;
+    margin: auto;
   }
 
   .switcher button {

@@ -10,7 +10,7 @@
 </script>
 
 <template>
-  <aside class="sidebar">
+  <section class="sidebar heading">
     <nav class="sidebar__nav" aria-label="Sidebar navigation">
 
       <ul class="sidebar__group sidebar__group--main">
@@ -101,20 +101,20 @@
       </ul>
 
     </nav>
-  </aside>
+  </section>
 
 </template>
 
 <style scoped lang="scss">
 
   .sidebar {
-    position: fixed;
     background-color: var(--body-background);
+    grid-column: 1/2;
   }
 
   .sidebar {
     height: 100vh;
-    width: 100px;
+    //width: 100px;
 
     .sidebar__item {
       text-align: center;

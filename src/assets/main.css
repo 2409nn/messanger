@@ -13,12 +13,16 @@ ul, li {
 
 main {
     display: grid;
-    grid-template-columns: repeat(14, 1fr);
-    padding: 0 100px;
+    grid-template-columns: repeat(16, 1fr);
     height: 100vh;
     color: var(--main-text-color);
 }
 
 section .heading {
-    height: 80px;
+    height: 85px;
+
+    h2 {
+        font-weight: 400;
+        font-size: 20px;
+    }
 }

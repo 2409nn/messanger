@@ -59,8 +59,12 @@
 
 <style scoped lang="scss">
   .recent {
-
     margin-top: 10px;
+
+    &__chats {
+      width: 95%;
+      margin: auto;
+    }
 
     &__chat {
       display: flex;

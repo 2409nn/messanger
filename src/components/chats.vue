@@ -9,7 +9,7 @@
 <template>
   <section class="chats">
     <div class="chats__heading heading">
-      <h2 class="chats__title">Recent Messages</h2>
+      <h2 class="chats__heading-title">Recent Messages</h2>
     </div>
     <switcher firstName="Chat" secondName="Groups"></switcher>
     <recent-messages></recent-messages>
@@ -18,13 +18,11 @@
 
 <style scoped lang="scss">
   .chats {
-    grid-column: 1/5;
+    grid-column: 2/6;
     background-color: var(--body-background);
-    padding: 20px;
 
-    &__title {
-      font-weight: 400;
-      font-size: 20px;
+    &__heading {
+      padding: 20px;
     }
   }
 </style>

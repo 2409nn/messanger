@@ -95,15 +95,15 @@
 
 <template>
   <section class="conv">
-    <div class="conv__heading">
+    <div class="conv__heading heading">
       <div class="conv__userinfo">
         <div class="conv__userinfo-avatar">
           <img src="../assets/imgs/avatars/user_1.jpg" alt="avatar" class="conv__userinfo-image">
         </div>
         <div class="conv__userinfo-online online-tag"></div>
         <div class="conv__userinfo-title">
-          <p class="conv__userinfo-username">Ope</p>
-          <p class="conv__userinfo-status">Active</p>
+          <h2 class="conv__userinfo-username">Ope</h2>
+          <h4 class="conv__userinfo-status">Active</h4>
         </div>
       </div>
       <div class="conv__buttons">
@@ -188,7 +188,7 @@
   .conv {
     background-color: var(--main-background-color);
     flex-direction: column;
-    grid-column: 5/12;
+    grid-column: 6/17;
     grid-template-rows: 87px auto 87px;
     display: grid;
     max-height: 100vh;
@@ -259,6 +259,7 @@
 
       &-status {
         color: var(--secondary-text-color);
+        font-weight: 400;
       }
 
       &-image {

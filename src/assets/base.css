@@ -33,3 +33,49 @@ button, a {
   border-radius: 50%;
   border: 2px solid #1E1E1E;
 }
+
+@media (max-width: 1000px) {
+  p,
+  .conv__message__info-top {
+    font-size: 12px !important;
+  }
+
+  .conv__message-avatar, .recent__avatar-img {
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 10px !important;
+  }
+
+  .recent__avatar-online {
+    height: 15px !important;
+    width: 15px !important;
+    position: relative !important;
+    bottom: 17px !important;
+    left: 33px !important;
+  }
+}
+
+@media (max-width: 940px) {
+  main {
+    grid-template-rows: 90% 10%;
+  }
+
+  .sidebar {
+    grid-row: 2;
+    grid-column: 1/17 !important;
+  }
+
+  .sidebar nav {
+    flex-direction: row !important;
+    justify-content: space-evenly !important;
+  }
+
+  .sidebar nav ul {
+    flex-direction: row !important;
+
+  }
+
+  .chats {
+    grid-column: 1/6 !important;
+  }
+}
