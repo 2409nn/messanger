@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <div :class="{ 'is_active': is_active }" class="userSearch">
+  <div :class="{ 'is_active': is_active }" class="userSearch popup">
     <h3 class="userSearch__heading">Text user</h3>
     <div class="userSearch__find">
       <input placeholder="Type username..." class="userSearch__find-input" type="text">
@@ -49,13 +49,9 @@
 
 <style scoped lang="scss">
 .userSearch {
-  display: block;
-  background-color: var(--main-background-color);
   width: 700px;
   height: 550px;
   max-height: 550px;
-  padding: 20px;
-  border-radius: 16px;
 
   position: absolute;
   left: calc(50% - 700px/2);

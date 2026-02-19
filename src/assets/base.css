@@ -79,3 +79,16 @@ button, a {
     grid-column: 1/6 !important;
   }
 }
+
+.popup {
+  display: block;
+  background-color: var(--main-background-color);
+  padding: 20px;
+  border-radius: 16px;
+
+  position: absolute;
+  left: calc(50%);
+  top: calc(50%);
+
+  border: 1px solid var(--divider-border-color);
+}
