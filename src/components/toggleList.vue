@@ -20,8 +20,9 @@
 
   const setToggleStatus = () => {
     isActive.value = !isActive.value;
-
   }
+
+
 
 </script>
 
@@ -63,11 +64,9 @@
 
       &-btn {
         margin-left: auto;
-        transition: transform 0.2s;
 
         &.active {
           transform: rotate(90deg);
-          transition: transform 0.2s;
         }
       }
     }
