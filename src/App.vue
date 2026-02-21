@@ -15,7 +15,7 @@
 
 <!--  <user-search></user-search>-->
   <account-settings>
-<!--    <router-link to="/reg">Log out</router-link>-->
+
   </account-settings>
 
     <main>

@@ -12,6 +12,8 @@
   --online-sign-background: #53E04E;
   --divider-border-color: rgba(30, 30, 30, 0.4);
   --submit-background-color: #EEEEEE;
+  --danger-color: #E04E4E;
+  --placeholder-color: #A0A0A0;
 }
 
 * {
@@ -24,6 +26,17 @@
 
 button, a {
   cursor: pointer;
+}
+
+input,
+textarea {
+  outline: none;
+  color: var(--main-text-color);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--placeholder-color);
 }
 
 .online-tag {
@@ -91,4 +104,12 @@ button, a {
   top: calc(50%);
 
   border: 1px solid var(--divider-border-color);
+}
+
+.logOut-btn {
+  background-color: var(--danger-color);
+  color: white;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 5px;
 }

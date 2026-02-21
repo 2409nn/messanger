@@ -2,29 +2,105 @@
   import toggleList from "./toggleList.vue"
   import toggleButton from "./toggleButton.vue"
   import { ref } from 'vue'
+  import profile_default from '../assets/imgs/avatars/profile_default.png'
 
   const isOpen = ref({
+    personality: false,
     privacy: false,
     notification: false,
     theme: false,
   });
+
+  const supportContacts = {
+    supportEmail: 'a.iskander07@gmail.com',
+  }
+
+  const copyEmail = async (email) => {
+    try {
+      await navigator.clipboard.writeText(email);
+      alert('Email скопирован!');
+    } catch (err) {
+      console.error('Не удалось скопировать:', err);
+    }
+  };
+
+  const userData = {
+    username: 'aufderheidebluhterika',
+    fistname: 'Iskander',
+    lastname: 'Abdullayev',
+    avatar: 'https://avatars2.githubusercontent.com/u/55?v=4',
+  }
+
+  const closeButton = () => {
+
+  }
 
 </script>
 
 <template>
   <div class="accountSettings popup">
     <div class="accountSettings__heading">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7.75 20.75H13.75C18.75 20.75 20.75 18.75 20.75 13.75V7.75C20.75 2.75 18.75 0.75 13.75 0.75H7.75C2.75 0.75 0.75 2.75 0.75 7.75V13.75C0.75 18.75 2.75 20.75 7.75 20.75Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M12.01 14.28L8.48999 10.75L12.01 7.21997" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+
+      <button class="accountSettings__heading-closeBtn">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.75 20.75H13.75C18.75 20.75 20.75 18.75 20.75 13.75V7.75C20.75 2.75 18.75 0.75 13.75 0.75H7.75C2.75 0.75 0.75 2.75 0.75 7.75V13.75C0.75 18.75 2.75 20.75 7.75 20.75Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12.01 14.28L8.48999 10.75L12.01 7.21997" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
       <h3>Account settings</h3>
     </div>
     <div class="accountSettings__preferences">
       <h4>Settings & preferences</h4>
       <div class="accountSettings__preferences-lists">
+
+        <div class="accountSettings__preferences-personality">
+          <toggle-list @click="isOpen.personality = !isOpen.personality" >
+
+            <img :src="userData.avatar ? userData.avatar : profile_default" alt="profile" style="width: 40px; height: 40px; border-radius: 50%;">
+
+            <div class="accountSettings__preferences-personality__name" style="display: grid; grid-template-rows: repeat(2, 1fr); grid-template-columns: 1fr">
+              <p style="grid-row: 1; text-align: left; font-weight: 500; font-size: 16px" v-if="userData.fistname" class="accountSettings__preferences-personality__fullname">{{ userData.fistname }} {{userData.lastname }}</p>
+              <p style="grid-row: 2; text-align: left; font-weight: 400;" v-if="userData.username" class="accountSettings__preferences-personality__username">@{{ userData.username }}</p>
+            </div>
+
+          </toggle-list>
+
+          <form @submit.prevent="" action="" class="accountSettings__preferences-personality__form" v-if="isOpen.personality">
+            <div class="form-row-top">
+              <div class="avatar-upload">
+                <label for="accountSettings__input-avatar" style="height: 100%; width: 100%; padding: 10px; align-content: center">Click to Upload image</label>
+                <input id="accountSettings__input-avatar" type="file" hidden>
+              </div>
+
+              <div class="names-column">
+                <div class="form-group">
+                  <label for="first-name">First name:</label>
+                  <input type="text" id="first-name" placeholder="Type your firstname...">
+                </div>
+                <div class="form-group">
+                  <label for="last-name">Last name:</label>
+                  <input type="text" id="last-name" placeholder="Type your firstname...">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="username">Username:</label>
+              <input type="text" id="username" placeholder="Type username to find you...">
+            </div>
+
+            <div class="form-group">
+              <label for="bio">Bio:</label>
+              <textarea id="bio" placeholder="Type something, for example: my name is Iskander, I’m from Almaty city..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Save changes</button>
+          </form>
+        </div>
+
         <div class="accountSettings__preferences-privacy">
-          <toggle-list title="Privacy" list="privacy-preferences" @click="isOpen.privacy = !isOpen.privacy">
+          <toggle-list title="Privacy" @click="isOpen.privacy = !isOpen.privacy">
             <svg width="20" height="20" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14.581 7.74396C14.581 11.5836 11.7936 15.1798 7.98539 16.2319C7.72628 16.3026 7.44361 16.3026 7.18449 16.2319C3.3763 15.1798 0.588867 11.5836 0.588867 7.74396V4.29695C0.588867 3.65309 1.07569 2.92286 1.68029 2.67945L6.05381 0.889204C7.03531 0.488755 8.14243 0.488755 9.12392 0.889204L13.4974 2.67945C14.0942 2.92286 14.5889 3.65309 14.5889 4.29695L14.581 7.74396Z" stroke="black" stroke-width="1.17779" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M7.58497 8.82755C8.00147 8.82755 8.4009 8.6621 8.69541 8.36759C8.98991 8.07309 9.15536 7.67365 9.15536 7.25716C9.15536 6.84066 8.98991 6.44123 8.69541 6.14672C8.4009 5.85222 8.00147 5.68677 7.58497 5.68677C7.16848 5.68677 6.76905 5.85222 6.47454 6.14672C6.18004 6.44123 6.01459 6.84066 6.01459 7.25716C6.01459 7.67365 6.18004 8.07309 6.47454 8.36759C6.76905 8.6621 7.16848 8.82755 7.58497 8.82755ZM7.58497 8.82755V11.1831" stroke="black" stroke-width="1.17779" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -74,8 +150,8 @@
           <ul class="accountSettings__preferences__list" v-if="isOpen.theme">
 
             <li class="accountSettings__preferences__list-item">
-              <toggle-button class="accountSettings__preferences__list-btn" model-value=true label="Dark mode"></toggle-button>
-              <toggle-button class="accountSettings__preferences__list-btn" model-value=true label="Automatically switch theme"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn" label="Dark mode"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn" label="Automatically switch theme"></toggle-button>
             </li>
 
           </ul>
@@ -85,27 +161,62 @@
     </div>
     <div class="accountSettings__support">
 
-      <h4>Settings & preferences</h4>
-      <p>If you have any questions, suggestions, or issues, please email the developer: a.iskander07@gmail.com</p>
+      <h4>Support</h4>
+      <p>If you have any questions, suggestions, or issues, please email the developer:
+        <u
+          style="font-weight: 500; cursor: pointer"
+          @click="copyEmail(supportContacts.supportEmail);">
+          {{ supportContacts.supportEmail }}
+        </u></p>
     </div>
-    <slot></slot>
+    <button class="accountSettings__logOut-btn logOut-btn">Log out</button>
   </div>
 </template>
 
 <style scoped lang="scss">
   .accountSettings {
     width: 600px;
-    height: 800px;
+    height: fit-content;
+    max-height: 660px;
+    padding: 30px 20px;
     left: calc(50% - 600px / 2);
-    top: calc(50% - 800px / 2);
+    top: calc(50% - 900px / 2);
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     &__heading {
       display: flex;
       justify-content: left;
+      padding-bottom: 20px;
 
       h3 {
         margin: auto;
         font-weight: 500;
+      }
+
+      &-closeBtn {
+        background: none;
+        border: none;
+        stroke: black;
+
+        svg:hover {
+          cursor: pointer;
+          fill: black;
+          stroke: white;
+        }
+      }
+    }
+
+    &__support {
+      margin-top: 40px;
+
+      p {
+        margin-top: 20px;
       }
     }
 
@@ -115,6 +226,99 @@
         padding-bottom: 15px;
         display: block;
       }
+    }
+
+    &__logOut-btn {
+      width: 100%;
+      margin-top: 30px;
+      padding: 15px 0;
+      border-radius: 10px;
+
+      &:hover {
+        cursor: pointer;
+        filter: brightness(1.1);
+      }
+    }
+  }
+
+
+
+  .accountSettings__preferences-personality__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 10px 0;
+    background-color: var(--body-background);
+    padding: 20px;
+    border: 1px solid var(--divider-border-color);
+    border-radius: 10px;
+  }
+
+  .form-row-top {
+    display: flex;
+    gap: 20px;
+  }
+
+  .avatar-upload {
+    width: 150px;
+    height: 150px;
+    border: 1.5px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .names-column {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group label {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--main-background-color);
+    font-size: 14px;
+  }
+
+  .form-group textarea {
+    height: 100px;
+    resize: none;
+  }
+
+  .submit-btn {
+    background-color: var(--online-sign-background);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    margin-top: 10px;
+
+    &:hover {
+      filter: brightness(1.05);
     }
   }
 </style>

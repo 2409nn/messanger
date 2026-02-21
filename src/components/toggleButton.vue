@@ -11,6 +11,11 @@ defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  primary: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 });
 
@@ -21,7 +26,7 @@ defineEmits(['update:modelValue']);
 <template>
 
 
-  <label class="toggle-switch" :class="{ 'is-disabled': disabled }">
+  <label class="toggle-switch" :class="{ 'is-disabled': disabled, 'is-primary': primary }">
 
     <span v-if="label" class="label-text">{{ label }}</span>
 
@@ -60,7 +65,6 @@ defineEmits(['update:modelValue']);
   width: 44px;
   height: 22px;
   background-color: #ccc;
-  transition: 0.3s;
   border-radius: 22px;
 }
 
@@ -72,7 +76,6 @@ defineEmits(['update:modelValue']);
   left: 2px;
   bottom: 2px;
   background-color: white;
-  transition: 0.3s;
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
@@ -88,6 +91,10 @@ input:checked + .slider:before {
 .is-disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.is-primary {
+  background-color: var(--main-background-color);
 }
 
 .label-text {

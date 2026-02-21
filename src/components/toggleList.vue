@@ -30,7 +30,7 @@
   <div class="toggleList">
     <button class="toggleList__toggle" @click="setToggleStatus">
 
-      <div class="toggleList__toggle-icon">
+      <div class="toggleList__toggle-slot">
         <slot></slot>
       </div>
 
@@ -57,6 +57,14 @@
       align-items: center;
       padding: 20px;
       border-radius: 10px;
+      margin-top: 12px;
+
+      &-slot {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        align-items: center;
+      }
 
       &-title {
         margin-left: 15px;
