@@ -14,6 +14,15 @@
   --submit-background-color: #EEEEEE;
   --danger-color: #E04E4E;
   --placeholder-color: #A0A0A0;
+  --modal-z-index: 10;
+}
+
+[data-theme='dark'] {
+  --body-background: #262626;
+  --text-color: #FFFFFF;
+  --secondary-text-color: #FFFFFF;
+  --accent-color: #64ffda;
+  --main-background-color: #1E1E1E;
 }
 
 * {
@@ -22,6 +31,10 @@
   box-sizing: border-box;
 
   font-family: 'inter', sans-serif;
+}
+
+.popup {
+  z-index: var(--modal-z-index);
 }
 
 button, a {
@@ -76,16 +89,7 @@ textarea::placeholder {
   .sidebar {
     grid-row: 2;
     grid-column: 1/17 !important;
-  }
-
-  .sidebar nav {
-    flex-direction: row !important;
-    justify-content: space-evenly !important;
-  }
-
-  .sidebar nav ul {
-    flex-direction: row !important;
-
+    height: auto !important;
   }
 
   .chats {
@@ -112,4 +116,41 @@ textarea::placeholder {
   padding: 10px 30px;
   border: none;
   border-radius: 5px;
+}
+
+.accountSettings {
+  visibility: hidden;
+}
+
+.accountSettings.active {
+  visibility: visible;
+}
+
+@media (max-width: 740px) {
+
+  main {
+    grid-template-columns: repeat(2, 100%) !important;
+    overflow-x: hidden;
+    max-height: 100vh !important;
+  }
+  .chats {
+    grid-column: 1/2 !important;
+  }
+
+  .chats .heading {
+    text-align: center !important;
+  }
+
+  .conv {
+    /*display: none !important;*/
+    grid-column: 2/3 !important;
+    visibility: hidden;
+  }
+
+  .conv.active {
+    transform: translateX(-100%) !important;
+    transition: transform 0.4s;
+    visibility: visible;
+  }
+
 }

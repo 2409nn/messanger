@@ -4,6 +4,17 @@
   import { ref } from 'vue'
   import profile_default from '../assets/imgs/avatars/profile_default.png'
 
+  const emit = defineEmits(['update:isPopupVisible', 'update:isDark']);
+
+  const isDark = ref(false);
+
+  const props = defineProps({
+    isPopupVisible: {
+      type: Boolean,
+      required: true,
+    }
+  })
+
   const isOpen = ref({
     personality: false,
     privacy: false,
@@ -32,16 +43,22 @@
   }
 
   const closeButton = () => {
+    emit("update:isPopupVisible", false);
+  }
 
+  const toggleDark = () => {
+    isDark.value = !isDark.value;
+    console.log(isDark.value);
+    // emit("update:isDark", isDark.value);
   }
 
 </script>
 
 <template>
-  <div class="accountSettings popup">
+  <div class="accountSettings popup" :class="{'active' : props.isPopupVisible}">
     <div class="accountSettings__heading">
 
-      <button class="accountSettings__heading-closeBtn">
+      <button class="accountSettings__heading-closeBtn" @click="closeButton">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M7.75 20.75H13.75C18.75 20.75 20.75 18.75 20.75 13.75V7.75C20.75 2.75 18.75 0.75 13.75 0.75H7.75C2.75 0.75 0.75 2.75 0.75 7.75V13.75C0.75 18.75 2.75 20.75 7.75 20.75Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M12.01 14.28L8.48999 10.75L12.01 7.21997" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -150,7 +167,7 @@
           <ul class="accountSettings__preferences__list" v-if="isOpen.theme">
 
             <li class="accountSettings__preferences__list-item">
-              <toggle-button class="accountSettings__preferences__list-btn" label="Dark mode"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn" label="Dark mode" @update:modelValue="toggleDark"></toggle-button>
               <toggle-button class="accountSettings__preferences__list-btn" label="Automatically switch theme"></toggle-button>
             </li>
 
@@ -184,6 +201,16 @@
     overflow: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    transform: translateX(-100px);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+
+    &.active {
+      transform: translateX(0px);
+      opacity: 1;
+      visibility: visible;
+  }
 
     &::-webkit-scrollbar {
       display: none;
@@ -267,9 +294,12 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    cursor: pointer;
     font-size: 14px;
     flex-shrink: 0;
+
+    label {
+      cursor: pointer;
+    }
   }
 
   .names-column {

@@ -6,20 +6,24 @@
   import userSearch from "./components/userSearch.vue"
   import accountSettings from "./components/accountSettings.vue"
   import router from "./router"
+  import { ref } from "vue";
 
+  const isSettingsOpen = ref(false);
+
+  function handleUpdateSettings(payload) {
+    isSettingsOpen.value = payload;
+  }
 </script>
 
 <template>
 
-  <router-view />
-
 <!--  <user-search></user-search>-->
-  <account-settings>
+  <account-settings :class="{'active': isSettingsOpen.value}" v-model:is-popup-visible="isSettingsOpen.value">
 
   </account-settings>
 
     <main>
-      <side-menu></side-menu>
+      <side-menu @settings-clicked="handleUpdateSettings"></side-menu>
       <chats></chats>
       <conversation></conversation>
 <!--      <activity></activity>-->
