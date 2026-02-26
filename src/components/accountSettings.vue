@@ -186,7 +186,7 @@
           {{ supportContacts.supportEmail }}
         </u></p>
     </div>
-    <button class="accountSettings__logOut-btn logOut-btn">Log out</button>
+    <router-link to="/reg" class="accountSettings__logOut-btn logOut-btn">Log out</router-link>
   </div>
 </template>
 
@@ -256,6 +256,9 @@
     }
 
     &__logOut-btn {
+      display: block;
+      text-align: center;
+      text-decoration: none;
       width: 100%;
       margin-top: 30px;
       padding: 15px 0;

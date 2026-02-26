@@ -168,25 +168,30 @@
 
       border-radius: 20px;
     }
-
-    #sidebar__item-addChat {
-      display: none;
-    }
   }
 
   @media (max-width: 740px) {
 
     .sidebar {
       grid-column: 1/2 !important;
+      grid-row: 2/3;
     }
 
     .sidebar nav {
       justify-content: center;
       width: fit-content;
     }
+
+    #sidebar__item-addChat {
+      display: none;
+    }
   }
 
   @media (max-width: 440px) {
+
+    .sidebar {
+      height: 100%;
+    }
     .sidebar nav {
       padding: 20px;
       gap: 20px;

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
 
 :root {
   --sidebar__item_svg-background: #D8D8D8;
@@ -83,7 +84,9 @@ textarea::placeholder {
 
 @media (max-width: 940px) {
   main {
-    grid-template-rows: 90% 10%;
+    grid-template-rows: 85% 15%;
+    max-height: 100vh !important;
+    gap: 0 !important;
   }
 
   .sidebar {
@@ -131,10 +134,11 @@ textarea::placeholder {
   main {
     grid-template-columns: repeat(2, 100%) !important;
     overflow-x: hidden;
-    max-height: 100vh !important;
   }
+
   .chats {
     grid-column: 1/2 !important;
+    grid-row: 1/2 !important;
   }
 
   .chats .heading {
