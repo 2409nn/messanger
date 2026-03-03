@@ -3,6 +3,7 @@
 
   const activeTab = ref('chats');
   const settingsActive = ref(false);
+  const searchActive = ref(false);
 
   const setTab = (name) => {
     activeTab.value = name;
@@ -13,14 +14,13 @@
     emit('settingsClicked', settingsActive);
   }
 
-  const emit = defineEmits(["settingsClicked"]);
+  const showSearch = () => {
+    searchActive.value = true;
+    emit('searchClicked', searchActive);
+  }
+
+  const emit = defineEmits(["settingsClicked", "searchClicked"]);
 </script>
-
-<!--<script>-->
-<!--import {defineEmits, ref} from "vue";-->
-
-
-<!--</script>-->
 
 <template>
   <section class="sidebar">
@@ -64,19 +64,10 @@
         <li class="sidebar__item" id="sidebar__item-addChat">
           <svg
               :class="{ active: activeTab === 'addChat' }"
-              @click="setTab('addChat')"
-              width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_105_178)">
-              <path d="M14.4615 16.1346C14.4615 12.7466 17.2081 10 20.5962 10C23.9842 10 26.7308 12.7466 26.7308 16.1346C26.7308 19.5227 23.9842 22.2692 20.5962 22.2692C17.2081 22.2692 14.4615 19.5227 14.4615 16.1346Z" fill="currentColor"/>
-              <path d="M10 35.0962C10 29.2441 14.7441 24.5 20.5962 24.5C26.4482 24.5 31.1923 29.2441 31.1923 35.0962V35.0999C31.1923 35.1591 31.1918 35.2186 31.1908 35.2775C31.1843 35.6619 30.9803 36.016 30.6509 36.2143C27.7134 37.9829 24.2718 39 20.5962 39C16.9205 39 13.479 37.9829 10.5414 36.2143C10.212 36.016 10.008 35.6619 10.0015 35.2775C10.0005 35.2172 10 35.1567 10 35.0962Z" fill="currentColor"/>
-              <path d="M34.5385 17.8077C34.5385 17.1917 34.0391 16.6923 33.4231 16.6923C32.8071 16.6923 32.3077 17.1917 32.3077 17.8077V21.1538H28.9615C28.3455 21.1538 27.8462 21.6532 27.8462 22.2692C27.8462 22.8852 28.3455 23.3846 28.9615 23.3846H32.3077V26.7308C32.3077 27.3468 32.8071 27.8462 33.4231 27.8462C34.0391 27.8462 34.5385 27.3468 34.5385 26.7308V23.3846H37.8846C38.5006 23.3846 39 22.8852 39 22.2692C39 21.6532 38.5006 21.1538 37.8846 21.1538H34.5385V17.8077Z" fill="currentColor"/>
-              <circle cx="24" cy="24" r="23.5" stroke="currentColor" stroke-dasharray="5 5"/>
-            </g>
-            <defs>
-              <clipPath id="clip0_105_178">
-                <rect width="48" height="48" fill="white"/>
-              </clipPath>
-            </defs>
+              @click="showSearch"
+              width="48" height="48" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="40.8065" y="17.0292" width="83.8308" height="83.8308" rx="41.9154" transform="rotate(11.5448 40.8065 17.0292)" stroke="currentColor" stroke-width="17"/>
+            <path d="M132.414 155.005C135.179 158.799 140.495 159.634 144.29 156.87C148.084 154.106 148.919 148.789 146.155 144.995L139.284 150L132.414 155.005ZM104.147 101.77L97.2769 106.775L132.414 155.005L139.284 150L146.155 144.995L111.017 96.7649L104.147 101.77Z" fill="currentColor"/>
           </svg>
 
         </li>

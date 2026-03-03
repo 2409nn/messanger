@@ -48,6 +48,10 @@ import profileDefault from "@/assets/imgs/avatars/profile_default.png"
 
     &__username {
       font-weight: 300;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     &:hover {

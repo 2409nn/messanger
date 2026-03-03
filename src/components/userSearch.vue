@@ -3,15 +3,48 @@
   import { ref } from "vue"
   import EmptyState from "@/components/emptyState.vue";
 
-  const is_active = ref(false)
   const isEmpty = ref(true)
-  is_active.value = true
+  const emit = defineEmits(['update:isPopupVisible']);
+
+  const closeButton = () => {
+    emit("update:isPopupVisible", false);
+  }
+
+  const foundUsers = [
+    {
+      username: "aufderheidebluhterika",
+      firstname: "Iskanderious",
+      avatar: ""
+    },
+    {
+      username: "hlebaloff",
+      firstname: "Tot",
+      avatar: ""
+    },
+    {
+      username: "otchim6996",
+      firstname: "shmanka",
+      avatar: ""
+    }
+  ]
+
+  if (foundUsers.length > 0) {
+    isEmpty.value = false;
+  }
 
 </script>
 
 <template>
-  <div :class="{ 'is_active': is_active }" class="userSearch popup">
-    <h3 class="userSearch__heading">Text user</h3>
+  <div class="userSearch popup">
+    <div class="userSearch__heading">
+      <button class="userSearch__heading-closeBtn" @click="closeButton">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.75 20.75H13.75C18.75 20.75 20.75 18.75 20.75 13.75V7.75C20.75 2.75 18.75 0.75 13.75 0.75H7.75C2.75 0.75 0.75 2.75 0.75 7.75V13.75C0.75 18.75 2.75 20.75 7.75 20.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12.01 14.28L8.48999 10.75L12.01 7.21997" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <h3 class="userSearch__heading-title">Users search</h3>
+    </div>
     <div class="userSearch__find">
       <input placeholder="Type username..." class="userSearch__find-input" type="text">
       <button class="userSearch__find-btn">
@@ -25,8 +58,9 @@
 
     <div class="userSearch__found">
       <ul class="userSearch__found-users">
-        <li class="userSearch__found-user"><userCard first-name="Iskander" username="iskanderious"></userCard></li>
-        <li class="userSearch__found-user"><userCard first-name="Iskander" username="iskanderious"></userCard></li>
+
+        <li class="userSearch__found-user" v-for="user in foundUsers"><userCard :first-name=user.firstname :username=user.username></userCard></li>
+
       </ul>
 
     </div>
@@ -34,7 +68,9 @@
 </template>
 
 <style scoped lang="scss">
+
 .userSearch {
+  visibility: hidden;
   width: 700px;
   height: 550px;
   max-height: 550px;
@@ -42,15 +78,45 @@
   position: absolute;
   left: calc(50% - 700px/2);
   top: calc(50% - 550px/2 - 100px);
-  //overflow: hidden;
+  overflow: hidden;
+  transform: translateX(-100px);
 
   border: 1px solid var(--divider-border-color);
+  opacity: 0;
+  transition: 0.3s;
+
+  &.active {
+    transform: translateX(0px);
+    opacity: 1;
+    visibility: visible;
+  }
 
   &__heading {
-    text-align: center;
-    font-size: 16px;
-    font-weight: 500;
-    padding-bottom: 25px;
+    display: flex;
+    justify-content: left;
+    padding-bottom: 20px;
+    color: var(--main-text-color);
+
+    h3 {
+      margin: auto;
+      font-weight: 500;
+    }
+
+    &-closeBtn {
+      background: none;
+      border: none;
+      stroke: var(--main-text-color);
+
+      path {
+        color: var(--main-text-color);
+      }
+
+      svg:hover {
+        cursor: pointer;
+        fill: var(--main-text-color);
+        stroke: var(--body-background);
+      }
+    }
   }
 
   &__find {
