@@ -10,7 +10,7 @@
 
   const props = defineProps({
     isPopupVisible: {
-      type: Boolean,
+      type: [Boolean, Object],
       required: true,
     }
   })
@@ -48,7 +48,6 @@
 
   const toggleDark = () => {
     isDark.value = !isDark.value;
-    console.log(isDark.value);
     document.getElementById("app").setAttribute('data-theme', isDark.value ? 'dark' : 'light');
   }
 
@@ -126,7 +125,7 @@
           <ul class="accountSettings__preferences__list" v-if="isOpen.privacy">
 
             <li class="accountSettings__preferences__list-item">
-              <toggle-button class="accountSettings__preferences__list-btn" model-value=true label="Show last seen & online"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn" :model-value=true label="Show last seen & online"></toggle-button>
             </li>
             <li class="accountSettings__preferences__list-item">
               <toggle-button class="accountSettings__preferences__list-btn" label="Let other users see your profile photos"></toggle-button>
@@ -151,7 +150,7 @@
           <ul class="accountSettings__preferences__list" v-if="isOpen.notification">
 
             <li class="accountSettings__preferences__list-item">
-              <toggle-button class="accountSettings__preferences__list-btn" model-value=true label="Sound new messages"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn" :model-value=true label="Sound new messages"></toggle-button>
             </li>
 
           </ul>

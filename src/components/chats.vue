@@ -18,9 +18,9 @@
 <template>
   <section class="chats">
     <div class="chats__heading heading">
-      <h2 class="chats__heading-title">Recent Messages</h2>
+      <h2 class="chats__heading-title">Recent {{ activePage }}</h2>
     </div>
-    <switcher @switch="handleEmit" firstName="Chat" secondName="Group"></switcher>
+    <switcher @switch="handleEmit" firstName="Chat" secondName="Group" v-if="activePage === 'chats'"></switcher>
     <recent-messages v-if="currentTab === 'Chat'" :active-page=activePage></recent-messages>
     <recentGroupMessages v-if="currentTab === 'Group'"></recentGroupMessages>
   </section>

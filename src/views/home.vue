@@ -18,7 +18,7 @@ function handleUpdateSearch(payload) {
   isSearchOpen.value = payload;
 }
 
-function handleUpdateTab(payload) {
+function handleUpdatePage(payload) {
   activePage.value = payload;
 }
 
@@ -40,9 +40,9 @@ function handleUpdateTab(payload) {
     <side-menu
         @settings-clicked="handleUpdateSettings"
         @search-clicked="handleUpdateSearch"
-        @page-clicked="handleUpdateTab"/>
+        @page-clicked="handleUpdatePage"/>
 
-    <chats :active-tab="activePage" />
+    <chats :active-page="activePage" />
     <conversation />
   </main>
 </template>

@@ -45,23 +45,24 @@
       }
     },
     channels: {},
-    live: {},
+    live: {
 
+    },
   }
 
   const showData = computed(() => {
-    if (props.activePage === 'live') return usersData.live;
+    if (props.activePage === 'stream') return usersData.live;
     if (props.activePage === 'channels') return usersData.channels;
-    return usersData.personalChats;
+    if (props.activePage === 'chats') return usersData.personalChats;
+    // return {}
   });
 
-  // 2. Длина тоже должна быть вычисляемой
+  // Длина объекта с данными которые нужно отобразить
   const showDataLength = computed(() => Object.keys(showData.value).length);
 
+  // Слежка за изменением props.activePage
   watch(() => props.activePage, (newActivePage) => {
-    console.log(newActivePage)
-    console.log(showData);
-    console.log(showDataLength);
+
   });
 
 </script>
