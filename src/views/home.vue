@@ -1,10 +1,12 @@
 <script setup>
-import sideMenu from "../components/sideMenu.vue"
-import Chats from "../components/chats.vue"
-import conversation from "../components/conversation.vue"
-import accountSettings from "../components/accountSettings.vue"
-import { ref } from "vue";
+import sideMenu from "@/components/sideMenu.vue"
+import Chats from "@/components/chats.vue"
+import conversation from "@/components/conversation.vue"
+import accountSettings from "@/components/accountSettings.vue"
 import UserSearch from "@/components/userSearch.vue";
+import mobileHeader from "@/components/mobileHeader.vue"
+
+import { ref } from "vue";
 
 const isSettingsOpen = ref(false);
 const isSearchOpen = ref(false);
@@ -35,6 +37,8 @@ function handleUpdatePage(payload) {
       :class="{'active': isSettingsOpen}"
       v-model:is-popup-visible="isSettingsOpen"
   />
+
+  <mobile-header />
 
   <main>
     <side-menu

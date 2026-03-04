@@ -52,6 +52,22 @@ button, a {
   cursor: pointer;
 }
 
+.closeBtn {
+    background: none;
+    border: none;
+    stroke: var(--main-text-color);
+}
+
+.closeBtn .path {
+    color: var(--main-text-color);
+}
+
+.closeBtn svg:hover {
+    cursor: pointer;
+    fill: var(--main-text-color);
+    stroke: var(--body-background);
+}
+
 input,
 textarea {
   outline: none;

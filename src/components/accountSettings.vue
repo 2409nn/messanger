@@ -57,7 +57,7 @@
   <div class="accountSettings popup" :class="{'active' : props.isPopupVisible}">
     <div class="accountSettings__heading">
 
-      <button class="accountSettings__heading-closeBtn" @click="closeButton">
+      <button class="accountSettings__heading-closeBtn closeBtn" @click="closeButton">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M7.75 20.75H13.75C18.75 20.75 20.75 18.75 20.75 13.75V7.75C20.75 2.75 18.75 0.75 13.75 0.75H7.75C2.75 0.75 0.75 2.75 0.75 7.75V13.75C0.75 18.75 2.75 20.75 7.75 20.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M12.01 14.28L8.48999 10.75L12.01 7.21997" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -226,21 +226,6 @@
         font-weight: 500;
       }
 
-      &-closeBtn {
-        background: none;
-        border: none;
-        stroke: var(--main-text-color);
-
-        path {
-          color: var(--main-text-color);
-        }
-
-        svg:hover {
-          cursor: pointer;
-          fill: var(--main-text-color);
-          stroke: var(--body-background);
-        }
-      }
     }
 
     &__support {

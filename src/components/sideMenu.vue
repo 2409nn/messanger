@@ -154,7 +154,7 @@
       justify-content: space-between;
       padding: 15px 40px;
       gap: 40px;
-      background-color: var(--sidebar__item_svg-background);
+      border: 1px solid var(--sidebar__item_svg-background);
       height: fit-content;
       margin: auto;
 
