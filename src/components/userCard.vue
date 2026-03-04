@@ -44,6 +44,7 @@ import profileDefault from "@/assets/imgs/avatars/profile_default.png"
 
     &__firstname {
       font-weight: 500;
+      color: var(--main-text-color);
     }
 
     &__username {
@@ -52,6 +53,7 @@ import profileDefault from "@/assets/imgs/avatars/profile_default.png"
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: var(--secondary-text-color);
     }
 
     &:hover {

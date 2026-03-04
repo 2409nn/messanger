@@ -1,6 +1,6 @@
 <script setup>
 
-  import { ref } from 'vue'
+  import { ref, watch, computed } from 'vue'
 
   import user1 from '@/assets/imgs/avatars/user_1.jpg'
   import user2 from '@/assets/imgs/avatars/user_2.jpg'
@@ -8,43 +8,68 @@
   import user4 from '@/assets/imgs/avatars/user_4.jpg'
   import EmptyState from "@/components/emptyState.vue";
 
+  const props = defineProps({
+    activePage: {
+      type: String,
+      default: 'chats'
+    }
+  })
+
   const activeIndex = ref(null);
 
   const usersData = {
-    user_1: {
-      firstname: "Ope",
-      time: "16:47",
-      message: "Gee, its been good news all day. i met someone special today. she's really pretty.",
-      avatar: user1
+    personalChats: {
+      user_1: {
+        firstname: "Ope",
+        time: "16:47",
+        message: "Gee, its been good news all day. i met someone special today. she's really pretty.",
+        avatar: user1
+      },
+      user_2: {
+        firstname: "Bambam",
+        time: "16:12",
+        message: "Are you coming to class tomorrow? we have test.",
+        avatar: user2
+      },
+      user_3: {
+        firstname: "Lucia",
+        time: "15:27",
+        message: "I miss you dear, when are you coming to see me.",
+        avatar: user3
+      },
+      user_4: {
+        firstname: "Mijan",
+        time: "16:00",
+        message: "Baba what sup na, you still de Lagos?",
+        avatar: user4
+      }
     },
-    user_2: {
-      firstname: "Bambam",
-      time: "16:12",
-      message: "Are you coming to class tomorrow? we have test.",
-      avatar: user2
-    },
-    user_3: {
-      firstname: "Lucia",
-      time: "15:27",
-      message: "I miss you dear, when are you coming to see me.",
-      avatar: user3
-    },
-    user_4: {
-      firstname: "Mijan",
-      time: "16:00",
-      message: "Baba what sup na, you still de Lagos?",
-      avatar: user4
-    }
+    channels: {},
+    live: {},
+
   }
 
-  let usersLength = Object.keys(usersData).length;
+  const showData = computed(() => {
+    if (props.activePage === 'live') return usersData.live;
+    if (props.activePage === 'channels') return usersData.channels;
+    return usersData.personalChats;
+  });
+
+  // 2. Длина тоже должна быть вычисляемой
+  const showDataLength = computed(() => Object.keys(showData.value).length);
+
+  watch(() => props.activePage, (newActivePage) => {
+    console.log(newActivePage)
+    console.log(showData);
+    console.log(showDataLength);
+  });
 
 </script>
 
 <template>
   <div class="recent">
     <ul class="recent__chats">
-      <li class="recent__chat" v-for="(user, index) in usersData" @click="activeIndex=index" :class="{ active: activeIndex === index }">
+      <li class="recent__chat" v-for="(user, index) in showData" @click="activeIndex=index" :class="{ active: activeIndex === index }">
         <div class="recent__avatar">
           <img class="recent__avatar-img" :src="user.avatar" alt="avatar">
           <div class="recent__avatar-online online"></div>
@@ -58,7 +83,7 @@
         </div>
       </li>
     </ul>
-    <empty-state v-if="usersLength === 0"></empty-state>
+    <empty-state v-if="showDataLength === 0"></empty-state>
   </div>
 </template>
 

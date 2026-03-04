@@ -4,6 +4,7 @@
   import recentGroupMessages from "./recentGroupMessages.vue"
   import { ref } from "vue"
 
+  defineProps(["activePage"])
   const currentTab = ref("Chat");
 
   const handleEmit = (playload) => {
@@ -20,8 +21,8 @@
       <h2 class="chats__heading-title">Recent Messages</h2>
     </div>
     <switcher @switch="handleEmit" firstName="Chat" secondName="Group"></switcher>
-    <recent-messages v-if="currentTab == 'Chat'"></recent-messages>
-    <recentGroupMessages v-if="currentTab == 'Group'"></recentGroupMessages>
+    <recent-messages v-if="currentTab === 'Chat'" :active-page=activePage></recent-messages>
+    <recentGroupMessages v-if="currentTab === 'Group'"></recentGroupMessages>
   </section>
 </template>
 

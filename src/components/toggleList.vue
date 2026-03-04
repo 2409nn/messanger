@@ -8,7 +8,7 @@
 
     title: {
       type: String,
-      required: true
+      // required: true
     },
     buttonType: {
       type: String,

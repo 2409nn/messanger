@@ -4,9 +4,11 @@
   const activeTab = ref('chats');
   const settingsActive = ref(false);
   const searchActive = ref(false);
+  const emit = defineEmits(["settingsClicked", "searchClicked", "pageClicked"]);
 
   const setTab = (name) => {
     activeTab.value = name;
+    emit('pageClicked', activeTab.value);
   }
 
   const showSettings = () => {
@@ -19,7 +21,6 @@
     emit('searchClicked', searchActive);
   }
 
-  const emit = defineEmits(["settingsClicked", "searchClicked"]);
 </script>
 
 <template>

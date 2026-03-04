@@ -8,6 +8,7 @@ import UserSearch from "@/components/userSearch.vue";
 
 const isSettingsOpen = ref(false);
 const isSearchOpen = ref(false);
+const activePage = ref("chats");
 
 function handleUpdateSettings(payload) {
   isSettingsOpen.value = payload;
@@ -15,6 +16,10 @@ function handleUpdateSettings(payload) {
 
 function handleUpdateSearch(payload) {
   isSearchOpen.value = payload;
+}
+
+function handleUpdateTab(payload) {
+  activePage.value = payload;
 }
 
 </script>
@@ -32,8 +37,12 @@ function handleUpdateSearch(payload) {
   />
 
   <main>
-    <side-menu @settings-clicked="handleUpdateSettings" @search-clicked="handleUpdateSearch"/>
-    <chats />
+    <side-menu
+        @settings-clicked="handleUpdateSettings"
+        @search-clicked="handleUpdateSearch"
+        @page-clicked="handleUpdateTab"/>
+
+    <chats :active-tab="activePage" />
     <conversation />
   </main>
 </template>
