@@ -7,11 +7,25 @@ import UserSearch from "@/components/userSearch.vue"
 import mobileHeader from "@/components/mobileHeader.vue"
 
 import { ref } from "vue";
+import DropMenu from "@/components/dropMenu.vue";
 
 
 const isSettingsOpen = ref(false);
 const isSearchOpen = ref(false);
 const activePage = ref("chats");
+const isBurgerOpen = ref(false);
+
+const dropMenuBtns = [
+  {title: "Clear messages", onClickFn: () => {
+      console.log("clear messages")
+  }},
+  {title: "Block user", onClickFn: () => {
+      console.log("block user");
+    }},
+  {title: "Report", onClickFn: () => {
+    console.log("report user");
+    }},
+]
 
 function handleUpdateSettings(payload) {
   isSettingsOpen.value = payload;
@@ -24,6 +38,11 @@ function handleUpdateSearch(payload) {
 
 function handleUpdatePage(payload) {
   activePage.value = payload;
+}
+
+function handleUpdateDropMenu(payload) {
+  isBurgerOpen.value = !isBurgerOpen.value;
+
 }
 
 
@@ -41,10 +60,15 @@ function handleUpdatePage(payload) {
       v-model:is-popup-visible="isSettingsOpen"
   />
 
+  <drop-menu :buttons=dropMenuBtns v-if="isBurgerOpen"></drop-menu>
+
   <mobileHeader
       :search=true
-      :burger-menu=true
-      @search-clicked="handleUpdateSearch" />
+
+      @search-clicked="handleUpdateSearch"
+      @burger-clicked="handleUpdateDropMenu"
+  />
+
 
   <main>
     <side-menu
@@ -53,6 +77,6 @@ function handleUpdatePage(payload) {
         @page-clicked="handleUpdatePage"/>
 
     <chats :active-page="activePage" />
-    <conversation />
+    <conversation @burger-clicked="handleUpdateDropMenu" />
   </main>
 </template>

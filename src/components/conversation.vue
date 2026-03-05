@@ -1,6 +1,15 @@
 <script setup>
   import userAvatar1 from '@/assets/imgs/avatars/user_1.jpg'
   import userAvatar2 from '@/assets/imgs/avatars/user_2.jpg'
+  // import { defineEmits } from "vue"
+  // import { handleUpdateDropMenu } from '@/views/home.vue'
+
+  const emit = defineEmits(['burgerClicked'])
+
+  const onBurgerClicked = () => {
+
+    emit('burgerClicked', true)
+  }
 
   let chatData = {
       messages: [
@@ -118,7 +127,7 @@
             <path d="M15.8052 12.35L13.5 10.0192V2.98073L15.8052 0.649969C16.6151 -0.168988 18 0.411036 18 1.56921V11.4307C18 12.5889 16.6151 13.1689 15.8052 12.35Z" fill="currentColor"/>
           </svg>
         </button>
-        <button class="conv__buttons-button" style="background: none">
+        <button class="conv__buttons-button" style="background: none" @click="onBurgerClicked">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 6.1C10.5 5.21634 11.3954 4.5 12.5 4.5C13.6046 4.5 14.5 5.21634 14.5 6.1C14.5 6.98366 13.6046 7.7 12.5 7.7C11.3954 7.7 10.5 6.98366 10.5 6.1ZM10.5 12.5C10.5 11.6163 11.3954 10.9 12.5 10.9C13.6046 10.9 14.5 11.6163 14.5 12.5C14.5 13.3837 13.6046 14.1 12.5 14.1C11.3954 14.1 10.5 13.3837 10.5 12.5ZM10.5 18.9C10.5 18.0163 11.3954 17.3 12.5 17.3C13.6046 17.3 14.5 18.0163 14.5 18.9C14.5 19.7837 13.6046 20.5 12.5 20.5C11.3954 20.5 10.5 19.7837 10.5 18.9Z" fill="currentColor"/>
           </svg>
