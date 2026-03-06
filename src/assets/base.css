@@ -172,15 +172,14 @@ textarea::placeholder {
   }
 
   .conv {
-    /*display: none !important;*/
     grid-column: 2/3 !important;
-    visibility: hidden;
+    visibility: visible;
+    transition: transform 0.4s;
   }
 
   .conv.active {
     transform: translateX(-100%) !important;
     transition: transform 0.4s;
-    visibility: visible;
   }
 
 }

@@ -8,9 +8,13 @@
   const props = defineProps({
     activeChat: {
       type: Object,
-      default: () => ({}) // Для объектов в props default должен быть функцией
+      default: () => ({})
     },
-    chatData: Object // Предположим, данные приходят отсюда
+    chatData: Object,
+    isChatOpen: {
+      type: Boolean,
+      default: false,
+    }
   });
 
   const currentMessages = computed(() => {
@@ -20,7 +24,6 @@
   });
 
   const onBurgerClicked = () => {
-
     emit('burgerClicked', true)
   }
 
@@ -62,8 +65,8 @@
 </script>
 
 <template>
-  <section v-if="activeChat" class="conv">
-    <div class="conv__heading heading">
+  <section class="conv" :class="{'active': isChatOpen}" >
+    <div class="conv__heading heading" v-if="activeChat">
       <div class="conv__userinfo">
         <div class="conv__userinfo-avatar">
           <img :src="activeChat.avatar" alt="avatar" class="conv__userinfo-image">
@@ -93,7 +96,7 @@
         </button>
       </div>
     </div>
-    <div class="conv__chat">
+    <div class="conv__chat" v-if="activeChat">
       <div class="conv__messages">
 
         <div class="conv__message" v-for="message in currentMessages">
@@ -111,7 +114,7 @@
 
       </div>
     </div>
-    <div class="conv__send">
+    <div class="conv__send" v-if="activeChat">
       <form class="conv__send__form">
         <input type="text" class="conv__send__form-text" placeholder="Type something...">
         <div class="conv__send__form-buttons">
@@ -148,8 +151,9 @@
         </button>
       </form>
     </div>
+
+    <emptyState class="conv__emptyState" v-if="!activeChat" title="Chat is not selected" />
   </section>
-  <emptyState class="conv__emptyState" v-if="!activeChat" title="Chat is not selected" />
 </template>
 
 <style scoped lang="scss">
@@ -163,8 +167,8 @@
     max-height: 100vh;
 
     &__emptyState {
-      max-height: 100vh;
-      grid-column: 6/17;
+      height: 100vh;
+      grid-column: 1/17;
       align-content: center;
       margin: 0;
       background-color: var(--main-background-color);
