@@ -9,6 +9,7 @@ import contextMenu from "@/components/contextMenu.vue"
 import callWindow from "@/components/callWindow.vue"
 import confirm from "@/components/confirm.vue"
 import alert from "@/components/alert.vue"
+import createWindow from "@/components/createWindow.vue"
 
 import { ref } from "vue"
 import DropMenu from "@/components/dropMenu.vue"
@@ -148,12 +149,14 @@ function handleContextMenu(event) {
 
   <confirm :is-active="false" :yes-case="() => {console.log('zopa')}" :no-case="() => {console.log('piska')}" />
 
-  <alert :on-ok="() => {console.log('bombardiro crocodilo')}" is-active="true"></alert>
+  <alert :on-ok="() => {console.log('bombardiro crocodilo')}"></alert>
 
   <user-search
       :class="{'active': isSearchOpen}"
       v-model:is-popup-visible="isSearchOpen"
   />
+
+  <createWindow />
 
   <account-settings
       :class="{'active': isSettingsOpen}"

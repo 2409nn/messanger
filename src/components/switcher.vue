@@ -6,6 +6,10 @@ const emit = defineEmits(["switch"])
 const props = defineProps({
   firstName: String,
   secondName: String,
+  thirdName: {
+    type: String,
+    required: false,
+  },
 })
 
 const activeTab = ref( props.firstName );
@@ -19,8 +23,9 @@ const setTab = (name) => {
 
 <template>
   <div class="switcher">
-    <button class="switcher__first-btn" @click="setTab(firstName)" :class="{active: activeTab === firstName}">{{ firstName }}</button>
-    <button class="switcher__second-btn" @click="setTab(secondName)" :class="{active: activeTab === secondName}">{{ secondName }}</button>
+    <button class="switcher__first-btn" @click="setTab(firstName)" :class="{active: activeTab === props.firstName}">{{ firstName }}</button>
+    <button class="switcher__second-btn" @click="setTab(secondName)" :class="{active: activeTab === props.secondName}">{{ secondName }}</button>
+    <button v-if="thirdName" class="switcher__second-btn" @click="setTab(thirdName)" :class="{active: activeTab === thirdName}">{{ thirdName }}</button>
   </div>
 </template>
 
@@ -30,16 +35,18 @@ const setTab = (name) => {
     border-radius: 14px;
     padding: 5px;
     height: 50px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
     column-gap: 5px;
 
     width: 95%;
     margin: auto;
+
   }
 
   .switcher button {
     background: none;
+    flex: 1 1 auto;
+    min-width: 50px;
     border: none;
     border-radius: 10px;
     color: var(--secondary-text-color);
