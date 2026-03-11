@@ -8,6 +8,7 @@ import mobileHeader from "@/components/mobileHeader.vue"
 import contextMenu from "@/components/contextMenu.vue"
 import callWindow from "@/components/callWindow.vue"
 import confirm from "@/components/confirm.vue"
+import alert from "@/components/alert.vue"
 
 import { ref } from "vue"
 import DropMenu from "@/components/dropMenu.vue"
@@ -146,6 +147,8 @@ function handleContextMenu(event) {
 <template>
 
   <confirm :is-active="false" :yes-case="() => {console.log('zopa')}" :no-case="() => {console.log('piska')}" />
+
+  <alert :on-ok="() => {console.log('bombardiro crocodilo')}" is-active="true"></alert>
 
   <user-search
       :class="{'active': isSearchOpen}"
