@@ -45,25 +45,22 @@
       }
     },
     channels: {},
-    live: {
-
-    },
+    live: {},
   }
 
   const showData = computed(() => {
     if (props.activePage === 'stream') return usersData.live;
     if (props.activePage === 'channels') return usersData.channels;
     if (props.activePage === 'chats') return usersData.personalChats;
-    // return {}
   });
 
   // Длина объекта с данными которые нужно отобразить
   const showDataLength = computed(() => Object.keys(showData.value).length);
 
   // Слежка за изменением props.activePage
-  watch(() => props.activePage, (newActivePage) => {
-
-  });
+  // watch(() => props.activePage, (newActivePage) => {
+  //
+  // });
 
   const emit = defineEmits(["clickChat"])
 

@@ -5,13 +5,17 @@
       type: Array,
       required: true,
     },
+    position: {
+      type: Object,
+      required: true,
+    }
   })
 
 </script>
 
 
 <template>
-  <div class="dropMenu">
+  <div class="dropMenu" :style="{'top': position.y + 'px', left: position.x + 'px'}">
     <ul class="dropMenu__buttons">
       <li v-for="(btn, index) in props.buttons" :key="index" class="dropMenu__item">
         <button class="dropMenu__button" @click="btn.onClickFn" :class="{'dangerBtn': btn.danger}">
@@ -32,9 +36,7 @@
   border: 1px solid var(--divider-border-color);
   text-align: center;
   overflow: hidden;
-  right: 10px;
-  top: 6%;
-  z-index: 100;
+  z-index: 130;
 
   &__buttons {
     list-style: none;

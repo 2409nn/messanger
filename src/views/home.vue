@@ -7,6 +7,7 @@ import UserSearch from "@/components/userSearch.vue"
 import mobileHeader from "@/components/mobileHeader.vue"
 import contextMenu from "@/components/contextMenu.vue"
 import callWindow from "@/components/callWindow.vue"
+import confirm from "@/components/confirm.vue"
 
 import { ref } from "vue"
 import DropMenu from "@/components/dropMenu.vue"
@@ -23,7 +24,7 @@ const isChatOpen = ref(false);
 const isCallActive = ref(false);
 const isVideoCall = ref(false);
 
-const dropMenuBtns = [
+const chatMenuBtns = [
   {title: "Clear messages", danger: true, onClickFn: () => {
       console.log("clear messages")
   }},
@@ -33,6 +34,18 @@ const dropMenuBtns = [
   {title: "Report", danger: true, onClickFn: () => {
     console.log("report user");
     }},
+]
+
+const createBtns = [
+  {title: "New group", onClickFn: () => {
+      console.log("Group create")
+    }},
+  {title: "New channel", onClickFn: () => {
+    console.log("Channel create")
+    }},
+  {title: "Start live", onClickFn: () => {
+      console.log("live start")
+    }}
 ]
 
 const contextMessageBtns = [
@@ -81,6 +94,14 @@ function handleUpdatePage(payload) {
 
 function handleUpdateDropMenu(payload) {
   isBurgerOpen.value = !isBurgerOpen.value;
+  pos.value.x = payload.clientX;
+  pos.value.y = payload.clientY;
+}
+
+function handleCreateClick (payload) {
+  isBurgerOpen.value = !isBurgerOpen.value;
+  pos.value.x = payload.clientX;
+  pos.value.y = payload.clientY;
 }
 
 function handleUpdateChat(payload) {
@@ -103,6 +124,7 @@ function handleCallEnded(payload) {
 const pos = ref({x: 0, y: 0});
 const contextElement = ref('');
 
+
 function handleContextMenu(event) {
   event.preventDefault();
   pos.value.x = event.clientX;
@@ -123,6 +145,8 @@ function handleContextMenu(event) {
 
 <template>
 
+  <confirm :is-active="false" :yes-case="() => {console.log('zopa')}" :no-case="() => {console.log('piska')}" />
+
   <user-search
       :class="{'active': isSearchOpen}"
       v-model:is-popup-visible="isSearchOpen"
@@ -134,17 +158,18 @@ function handleContextMenu(event) {
   />
 
   <contextMenu :buttons=contextMessageBtns :position=pos v-if="contextElement" :element=contextElement ref="contextDOM" />
-  <drop-menu :buttons=dropMenuBtns v-if="isBurgerOpen" ref="burgerDOM" />
+  <drop-menu :buttons='isChatOpen ? chatMenuBtns : createBtns' v-if="isBurgerOpen" :position="pos" ref="burgerDOM" />
 
   <mobileHeader
       :search=true
       :close-btn="isChatOpen"
       :title="isChatOpen ? activeChat.firstname : ''"
-      :burger-menu="isChatOpen"
+      :burger-menu="true"
       :call="isChatOpen"
       @search-clicked="handleUpdateSearch"
       @burger-clicked="handleUpdateDropMenu"
       @close-clicked="handleUpdateCloseBtn"
+      @call-clicked="handleCallClick"
   />
 
   <callWindow :active="isCallActive" :is-video="isVideoCall" @call-ended="handleCallEnded" />
@@ -153,6 +178,7 @@ function handleContextMenu(event) {
     <side-menu
         @settings-clicked="handleUpdateSettings"
         @search-clicked="handleUpdateSearch"
+        @create-clicked="handleCreateClick"
         @page-clicked="handleUpdatePage"/>
 
     <chats :active-page="activePage" @click-chat="handleUpdateChat"/>

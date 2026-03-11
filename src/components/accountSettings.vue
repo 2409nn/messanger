@@ -193,7 +193,6 @@
   .accountSettings {
     height: fit-content;
     max-height: 660px;
-
     overflow: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -280,7 +279,7 @@
   .avatar-upload {
     width: 150px;
     height: 150px;
-    border: 1.5px solid #000;
+    border: 1.5px solid var(--main-text-color);
     display: flex;
     align-items: center;
     justify-content: center;

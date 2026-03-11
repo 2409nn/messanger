@@ -78,7 +78,7 @@
 
     <button class="callWindow__button callWindow__button-end" @click="onCloseClick">
       <svg width="30" height="30" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="20" height="20" rx="10" fill="#E04E4E"/>
+        <rect width="20" height="20" rx="10" fill="currentColor"/>
         <rect x="13.0753" y="5.80646" width="1.58149" height="10.2797" rx="0.790743" transform="rotate(45 13.0753 5.80646)" fill="white"/>
         <rect x="14.1935" y="13.0753" width="1.58149" height="10.2797" rx="0.790743" transform="rotate(135 14.1935 13.0753)" fill="white"/>
       </svg>
@@ -105,9 +105,15 @@
     left: calc(50% - var(--call-width) / 2);
     top: calc(50% - var(--call-height) / 2 - 100px);
 
+    @media (max-width: 740px) {
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      border-radius: 0;
+    }
+
     &__svg-cross {
-      //stroke: none;
-      //fill: none;
       stroke: var(--main-background-color);
       fill: var(--main-text-color);
       height: 0%;
@@ -129,12 +135,21 @@
       border-radius: 50%;
       width: 100px;
       margin-top: 30px;
+
+      @media (max-width: 740px) {
+        margin-top: 30%;
+        width: 200px;
+      }
     }
 
     &__title {
       font-size: 20px;
       margin-top: 10px;
       font-weight: 500;
+
+      @media (max-width: 740px) {
+        font-size: 20px !important;
+      }
     }
 
     &__buttons {
@@ -146,6 +161,12 @@
       padding: 10px 30px;
       border-radius: 10px;
       border: 1px solid var(--divider-border-color);
+
+      @media (max-width: 740px) {
+        position: relative;
+        top: 40%;
+        transform: scale(1.3);
+      }
     }
 
     &__button {
@@ -157,7 +178,10 @@
       border: none;
 
       &-end {
-        background: var(--danger-color);
+        background-color: var(--danger-color);
+        svg {
+          color: var(--danger-color) !important;
+        }
       }
 
       &-icon {
