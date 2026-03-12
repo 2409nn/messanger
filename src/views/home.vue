@@ -11,6 +11,7 @@ import confirm from "@/components/confirm.vue"
 import alert from "@/components/alert.vue"
 import createWindow from "@/components/createWindow.vue"
 
+
 import { ref } from "vue"
 import DropMenu from "@/components/dropMenu.vue"
 import { onClickOutside } from "@vueuse/core"
@@ -144,7 +145,7 @@ const pos = ref({x: 0, y: 0});
 const contextElement = ref('');
 
 
-function handleContextMenu(event) {
+function handleContextMenu (event) {
   event.preventDefault();
   pos.value.x = event.clientX;
   pos.value.y = event.clientY;
@@ -158,6 +159,7 @@ function handleContextMenu(event) {
     contextElement.value = '';
   }
 }
+
 
 
 </script>

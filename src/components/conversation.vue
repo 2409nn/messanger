@@ -3,6 +3,16 @@
   import userAvatar2 from '@/assets/imgs/avatars/user_2.jpg'
   import { computed, ref, reactive, nextTick, watch } from "vue"
   import emptyState from "@/components/emptyState.vue"
+  import mediaSender from "@/components/mediaSender.vue"
+  import mediaPlayer from "@/components/mediaPlayer.vue"
+
+  const isMediaSender = ref(false);
+  const isMediaPlayer = ref(false);
+
+  const mediaMessage = ref(null); // объект выбранного медиа + текст
+  const selectedMedia = ref(null); // объект выбранного медиа
+  const previewMedia = ref(null); // только URL
+  const mediaText = ref('');
 
   const emit = defineEmits(['burgerClicked', 'audioCallClicked', 'videoCallClicked']);
   const props = defineProps({
@@ -17,11 +27,43 @@
     }
   });
 
+  const onFileSelected = (event) => {
+    const file = event.target.files[0];
+    if (file.type.startsWith("image/")) {
+      isMediaSender.value = true;
+      selectedMedia.value = file;
+      previewMedia.value = URL.createObjectURL(file);
+    }
+
+  }
+
   const currentMessages = computed(() => {
     const index = props.activeChat?.index;
     // Если индекс есть и такой чат существует в нашем реактивном объекте
     return (index && chatData[index]) ? chatData[index].messages : [];
   });
+
+  function handleMediaSend (payload) {
+    mediaMessage.value = payload;
+
+    const now = new Date();
+    const user = {id: 1488, firstname: "Iskanderious", avatar: userAvatar2}; // Переписать когда подключу firebase
+    const time = `${now.getHours()}:${now.getMinutes()}`;
+
+    const newMessage = {
+      senderID: user.id,
+      avatar: user.avatar,
+      text: mediaMessage.value.text,
+      media: previewMedia.value,
+      date: now.toISOString(),
+      time: time,
+      chat: props.activeChat.index
+    }
+
+    chatData[props.activeChat.index].messages.push({avatar: user.avatar, title: "Me", media: previewMedia.value, text: mediaMessage.value.text, time: time});
+    mediaText.value = mediaMessage.value.text;
+  }
+
 
   const onBurgerClicked = (event) => {
     emit('burgerClicked', event)
@@ -107,13 +149,13 @@
     scrollToBottom();
   });
 
-  const onFileSelected = (event) => {
-    console.log(event.target.files[0]);
-  }
-
 </script>
 
 <template>
+
+  <mediaSender @on-media-send="handleMediaSend" :class="{'active': isMediaSender}" v-model:is-popup-visible="isMediaSender" :media="previewMedia" />
+  <mediaPlayer :class="{'active': isMediaPlayer}" v-model:is-popup-visible="isMediaPlayer" :media="previewMedia" :media-text="mediaText" />
+
   <section class="conv" :class="{'active': isChatOpen}" >
     <div class="conv__heading heading" v-if="activeChat">
       <div class="conv__userinfo">
@@ -156,7 +198,7 @@
               <span class="conv__message__info-top__title">{{ message.title }}</span>
               <span class="conv__message__info-top__time">{{ message.time }}</span>
             </div>
-
+            <img class="conv__message-media" v-if="message.media" :src="message.media" @click="isMediaPlayer = true">
             <p class="conv__message__info__text">{{ message.text }}</p>
           </div>
         </div>
@@ -258,6 +300,11 @@
         width: 70px;
         height: 70px;
         border-radius: 25px;
+      }
+
+      &-media {
+        max-width: 100%;
+        border-radius: 10px;
       }
 
       &__info-top {

@@ -55,6 +55,10 @@ header {
     height: var(--header-height);
 }
 
+img {
+  color: var(--secondary-text-color);
+}
+
 .popup {
   z-index: var(--modal-z-index);
     left: calc(50% - var(--modal-width)/2) !important;

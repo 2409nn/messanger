@@ -205,29 +205,6 @@
     //  }
     //}
   }
-
-    &-input {
-      background: none;
-      border: none;
-      width: 100%;
-      padding: 10px;
-      outline: none;
-
-      &::placeholder {
-        color: var(--secondary-text-color);
-      }
-    }
-
-    &-btn {
-      background: none;
-      border: none;
-
-      svg {
-        width: 25px;
-        height: 25px;
-        color: var(--main-text-color);
-      }
-    }
   }
 
 </style>
