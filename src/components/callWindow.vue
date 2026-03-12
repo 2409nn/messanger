@@ -164,7 +164,7 @@
 
       @media (max-width: 740px) {
         position: relative;
-        top: 40%;
+        //top: 40%;
         transform: scale(1.3);
       }
     }

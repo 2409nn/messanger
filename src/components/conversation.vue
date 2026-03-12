@@ -23,8 +23,8 @@
     return (index && chatData[index]) ? chatData[index].messages : [];
   });
 
-  const onBurgerClicked = () => {
-    emit('burgerClicked', true)
+  const onBurgerClicked = (event) => {
+    emit('burgerClicked', event)
   }
 
   let chatData = reactive({

@@ -1,36 +1,61 @@
 <script setup>
   import userCard from "./userCard.vue"
-  import { ref } from "vue"
+  import { ref, computed } from "vue"
   import EmptyState from "@/components/emptyState.vue";
+  import Arlan from "@/assets/imgs/avatars/Arlan.jpg"
+  import Juliana from "@/assets/imgs/avatars/Juliana.jpg"
+  import Iskanderious from "@/assets/imgs/avatars/iskanderious.jpg"
 
   const isEmpty = ref(true)
   const emit = defineEmits(['update:isPopupVisible']);
+  const searchText = ref("");
 
   const closeButton = () => {
     emit("update:isPopupVisible", false);
   }
 
-  const foundUsers = [
+  const availableUsers = [
     {
       username: "aufderheidebluhterika",
       firstname: "Iskanderious",
-      avatar: ""
+      avatar: Iskanderious
     },
     {
       username: "hlebaloff",
-      firstname: "Tot",
-      avatar: ""
+      firstname: "Arlan",
+      avatar: Arlan
     },
     {
       username: "otchim6996",
-      firstname: "shmanka",
-      avatar: ""
-    }
+      firstname: "Shmanka",
+      avatar: Juliana
+    },
   ]
 
-  if (foundUsers.length > 0) {
-    isEmpty.value = false;
+  const foundUsers = ref([]);
+
+  // функция напрямую делает запрос на базу данных
+  function makeSearchRequest () {
+
+    if (searchText.value.length > 0) {
+      foundUsers.value = availableUsers.filter(user =>
+          user.username.toLowerCase().startsWith(searchText.value.toLowerCase())
+      );
+
+      if (foundUsers.value.length > 0) {
+        isEmpty.value = false;
+      } else {
+        isEmpty.value = true;
+      }
+    }
+    else {
+      isEmpty.value = true;
+      foundUsers.value = [];
+    }
   }
+
+  console.log(foundUsers.value)
+
 
 </script>
 
@@ -46,7 +71,7 @@
       <h3 class="userSearch__heading-title">Users search</h3>
     </div>
     <div class="userSearch__find">
-      <input placeholder="Type username..." class="userSearch__find-input" type="text">
+      <input @input="makeSearchRequest" v-model="searchText" placeholder="Type username..." class="userSearch__find-input" type="text">
       <button class="userSearch__find-btn">
         <svg width="171" height="171" viewBox="0 0 171 171" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="40.8065" y="17.0292" width="83.8308" height="83.8308" rx="41.9154" transform="rotate(11.5448 40.8065 17.0292)" stroke="currentColor" stroke-width="17"/>
@@ -59,7 +84,7 @@
     <div class="userSearch__found">
       <ul class="userSearch__found-users">
 
-        <li class="userSearch__found-user" v-for="user in foundUsers"><userCard :first-name=user.firstname :username=user.username></userCard></li>
+        <li class="userSearch__found-user" v-for="user in foundUsers"><userCard :avatar="user.avatar" :first-name=user.firstname :username=user.username></userCard></li>
 
       </ul>
 

@@ -10,7 +10,8 @@
 
   const activeTab = ref('Group');
   const contactsOpen = ref(false);
-  const emit = defineEmits(['isPopupVisible']);
+  const formDOM = ref(null);
+  const emit = defineEmits(['update:isPopupVisible', 'callAlert', 'createdData']);
 
   const handleSwitch = (payload) => {
     activeTab.value = payload
@@ -18,6 +19,31 @@
 
   const closeButton = () => {
     emit("update:isPopupVisible", false);
+  }
+  const onCreateClick = () => {
+    if (formDOM.value) {
+
+      const inputs = formDOM.value.querySelectorAll("input");
+      // небольшая валидация на пустые поля
+
+      let isEmpty = false;
+      inputs.forEach(input => {
+        isEmpty = String(input.value).trim().length === 0;
+      })
+
+      if (isEmpty) {
+        emit("callAlert", "Fields cannot be empty, please fill the fields");
+      }
+      else {
+        const data = {
+          title: formDOM.value.querySelector("#createWindow__space-name").value,
+          description: formDOM.value.querySelector("#createWindow__space-description").value,
+          members: formDOM.value.querySelectorAll(".createWindow__contact"),
+
+        }
+        emit('createdData', )
+      }
+    }
   }
 
   const contacts = [
@@ -30,7 +56,7 @@
 </script>
 
 <template>
-  <div class="createWindow active popup">
+  <div class="createWindow popup">
     <div class="createWindow__heading">
       <button class="createWindow__heading-closeBtn closeBtn" @click="closeButton">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,15 +68,15 @@
     </div>
     <switcher @switch="handleSwitch" class="createWindow__switcher" first-name="Group" second-name="Channel" third-name="Stream" />
 
-    <form class="createWindow__form" @submit.prevent="">
+    <form class="createWindow__form" ref="formDOM" @submit.prevent="">
 
       <label class="createWindow__label" for="createWindow__space-name">Name</label>
-      <input placeholder="Type name here..." type="text" id="createWindow__group-name">
+      <input placeholder="Type name here..." type="text" id="createWindow__space-name">
 
       <label class="createWindow__label" for="createWindow__space-description">Description</label>
       <textarea id="createWindow__space-description" placeholder="Type description here..."></textarea>
 
-      <toggleList title="Group’s members" @click="contactsOpen = !contactsOpen">
+      <toggleList title="Members" @click="contactsOpen = !contactsOpen">
       </toggleList>
 
       <ul class="createWindow__contacts" v-if="contactsOpen">
@@ -60,7 +86,7 @@
         </li>
       </ul>
 
-      <button type="button" class="createWindow__create-button">Create</button>
+      <button type="button" class="createWindow__create-button" @click="onCreateClick">Create</button>
     </form>
   </div>
 </template>

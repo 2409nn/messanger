@@ -32,8 +32,8 @@
     emit('searchClicked', true);
   }
 
-  const onBurgerClicked = (payload) => {
-    emit('burgerClicked', true);
+  const onBurgerClicked = (event) => {
+    emit('burgerClicked', event);
   }
 
   const onCloseClicked = (payload) => {

@@ -12,7 +12,7 @@
     activePage: {
       type: String,
       default: 'chats'
-    }
+    },
   })
 
   const activeIndex = ref(null);

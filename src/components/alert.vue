@@ -9,7 +9,7 @@ const props = defineProps({
   },
   text: {
     type: String,
-    default: 'You have unsaved changes that will be lost if you leave this page. Are you sure you want to proceed?'
+    required: true
   },
   onOk: {
     type: Function,
@@ -18,9 +18,10 @@ const props = defineProps({
 
   isActive: {
     type: Boolean,
-    default: false
   }
 })
+
+const emit = defineEmits(["update:isActive"])
 
 const active = ref(props.isActive);
 
@@ -37,7 +38,7 @@ watch(() => props.isActive, (newVal) => {
     <p class="confirm__text">{{ text }}</p>
 
     <div class="confirm__buttons">
-      <button class="confirm__button confirm__button-no" @click="() => {onOk(); active = false}">Ok</button>
+      <button class="confirm__button confirm__button-ok" @click="() => {onOk(); active = false; emit('update:isActive', false)}">Ok</button>
     </div>
   </div>
 </template>

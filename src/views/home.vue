@@ -15,16 +15,31 @@ import { ref } from "vue"
 import DropMenu from "@/components/dropMenu.vue"
 import { onClickOutside } from "@vueuse/core"
 
+// Референсы для всплывающих окон
 const isSettingsOpen = ref(false);
 const isSearchOpen = ref(false);
-const activePage = ref("chats");
-const isBurgerOpen = ref(false);
-const burgerDOM = ref(null);
-const contextDOM = ref(null);
-const activeChat = ref(null);
 const isChatOpen = ref(false);
+const isBurgerOpen = ref(false);
+const isCreateOpen = ref(false);
 const isCallActive = ref(false);
 const isVideoCall = ref(false);
+
+// Прочее
+const activeChat = ref(null);
+const activePage = ref("chats");
+const alertText = ref('You have unsaved changes that will be lost if you leave this page. Are you sure you want to proceed?');
+const alertIsActive = ref(false);
+
+// DOM объекты элементов
+const burgerDOM = ref(null);
+const mainDOM = ref(null)
+const contextDOM = ref(null);
+
+
+const handleCallAlert = (payload) => {
+  alertText.value = payload;
+  alertIsActive.value = true;
+}
 
 const chatMenuBtns = [
   {title: "Clear messages", danger: true, onClickFn: () => {
@@ -96,14 +111,16 @@ function handleUpdatePage(payload) {
 
 function handleUpdateDropMenu(payload) {
   isBurgerOpen.value = !isBurgerOpen.value;
-  pos.value.x = payload.clientX;
-  pos.value.y = payload.clientY;
+
+  if (mainDOM.value) {
+    let mainWidth = mainDOM.value.clientWidth;
+    pos.value.x = payload.clientX - (mainWidth - payload.clientX + 100);
+    pos.value.y = payload.clientY + 25;
+  }
 }
 
 function handleCreateClick (payload) {
-  isBurgerOpen.value = !isBurgerOpen.value;
-  pos.value.x = payload.clientX;
-  pos.value.y = payload.clientY;
+  isCreateOpen.value = true;
 }
 
 function handleUpdateChat(payload) {
@@ -149,14 +166,17 @@ function handleContextMenu(event) {
 
   <confirm :is-active="false" :yes-case="() => {console.log('zopa')}" :no-case="() => {console.log('piska')}" />
 
-  <alert :on-ok="() => {console.log('bombardiro crocodilo')}"></alert>
+  <alert :is-active="alertIsActive" v-model:is-active="alertIsActive" :text="alertText" :on-ok="() => {console.log('bombardiro crocodilo')}"></alert>
 
   <user-search
       :class="{'active': isSearchOpen}"
       v-model:is-popup-visible="isSearchOpen"
   />
 
-  <createWindow />
+  <createWindow
+      :class="{'active': isCreateOpen}"
+      @call-alert="handleCallAlert"
+      v-model:is-popup-visible="isCreateOpen"/>
 
   <account-settings
       :class="{'active': isSettingsOpen}"
@@ -164,7 +184,7 @@ function handleContextMenu(event) {
   />
 
   <contextMenu :buttons=contextMessageBtns :position=pos v-if="contextElement" :element=contextElement ref="contextDOM" />
-  <drop-menu :buttons='isChatOpen ? chatMenuBtns : createBtns' v-if="isBurgerOpen" :position="pos" ref="burgerDOM" />
+  <drop-menu :buttons='isChatOpen ? chatMenuBtns : createBtns' v-if="isBurgerOpen" :position=pos ref="burgerDOM" />
 
   <mobileHeader
       :search=true
@@ -180,7 +200,7 @@ function handleContextMenu(event) {
 
   <callWindow :active="isCallActive" :is-video="isVideoCall" @call-ended="handleCallEnded" />
 
-  <main @contextmenu="handleContextMenu" >
+  <main @contextmenu="handleContextMenu" ref="mainDOM">
     <side-menu
         @settings-clicked="handleUpdateSettings"
         @search-clicked="handleUpdateSearch"
