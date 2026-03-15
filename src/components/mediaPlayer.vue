@@ -6,6 +6,10 @@ const props = defineProps({
   },
   mediaText: {
     required: true
+  },
+  isVideo: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -32,7 +36,8 @@ const closeButton = () => {
     </div>
 
     <div class="mediaPlayer__media">
-      <img :src="props.media" alt="media" class="mediaPlayer__media-preview">
+      <img v-if="!isVideo" :src="props.media" alt="media" class="mediaPlayer__media-preview">
+      <video v-if="isVideo" :src="props.media" alt="media" class="mediaPlayer__media-preview" controls></video>
     </div>
   </div>
 </template>

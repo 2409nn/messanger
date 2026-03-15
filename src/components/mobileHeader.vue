@@ -23,10 +23,14 @@
     burgerMenu: {
       type: Boolean,
       default: false
+    },
+    createBtn: {
+      type: Boolean,
+      default: false
     }
   });
 
-  const emit = defineEmits(["searchClicked", "burgerClicked", "closeClicked", "callClicked"]);
+  const emit = defineEmits(["searchClicked", "burgerClicked", "closeClicked", "callClicked", "createClicked"]);
 
   const onSearchUser = () => {
     emit('searchClicked', true);
@@ -42,6 +46,10 @@
 
   const onCallClicked = (payload) => {
     emit('callClicked', true);
+  }
+
+  const onCreateClicked = (payload) => {
+    emit('createClicked', true);
   }
 
 </script>
@@ -87,6 +95,15 @@
                 <svg width="30" height="30" viewBox="0 0 170 170" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="40.8065" y="17.0292" width="83.8308" height="83.8308" rx="41.9154" transform="rotate(11.5448 40.8065 17.0292)" stroke="currentColor" stroke-width="17"/>
                   <path d="M132.414 155.005C135.179 158.799 140.495 159.634 144.29 156.87C148.084 154.106 148.919 148.789 146.155 144.995L139.284 150L132.414 155.005ZM104.147 101.77L97.2769 106.775L132.414 155.005L139.284 150L146.155 144.995L111.017 96.7649L104.147 101.77Z" fill="currentColor"/>
+                </svg>
+              </button>
+            </li>
+            <li class="header__group-item" id="header__create">
+              <button class="header__group-button" v-if="props.createBtn" @click="onCreateClicked">
+                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="9" y="8" width="83" height="83" rx="41.5" stroke="currentColor" stroke-width="4" stroke-dasharray="12 12"/>
+                  <rect x="48" y="29" width="5" height="42" rx="1" fill="currentColor"/>
+                  <rect x="71" y="48" width="5" height="42" rx="1" transform="rotate(90 71 48)" fill="currentColor"/>
                 </svg>
               </button>
             </li>

@@ -6,6 +6,9 @@ const props = defineProps({
   media: {
     required: true
   },
+  isVideo: {
+    default: false,
+  }
 })
 
 const text = ref('');
@@ -36,7 +39,8 @@ const onSubmitClick = () => {
     </div>
 
     <div class="mediaSender__media">
-      <img :src="props.media" alt="media" class="mediaSender__media-preview">
+      <img :src="props.media" alt="media" class="mediaSender__media-preview" v-if="!isVideo">
+      <video controls :src="props.media" preload="metadata" alt="media" class="mediaSender__media-preview" v-if="isVideo"></video>
     </div>
 
     <form class="mediaSender__form" @submit.prevent="" >

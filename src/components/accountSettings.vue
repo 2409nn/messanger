@@ -4,6 +4,10 @@
   import { ref, reactive } from 'vue'
   import profile_default from '../assets/imgs/avatars/profile_default.png'
 
+  // доступ к localStorage через Pinia
+  import { useSettingsStore } from '@/stores/settings.js'
+  const settingsStore = useSettingsStore();
+
   const emit = defineEmits(['update:isPopupVisible', 'update:isDark']);
 
   const previewMedia = ref('https://avatars2.githubusercontent.com/u/55?v=4'); // только URL
@@ -13,7 +17,7 @@
   const bio = ref('Developer of Nuclear');
   const personalityForm = ref(null);
 
-  const isDark = ref(false);
+  const isDark = settingsStore.settings.darkMode;
 
   const props = defineProps({
     isPopupVisible: {
@@ -55,8 +59,9 @@
   }
 
   const toggleDark = () => {
-    isDark.value = !isDark.value;
-    document.getElementById("app").setAttribute('data-theme', isDark.value ? 'dark' : 'light');
+    settingsStore.settings.darkMode = !isDark;
+    console.log(settingsStore.settings.darkMode);
+    document.getElementById("app").setAttribute('data-theme', settingsStore.settings.darkMode ? 'dark' : 'light');
   }
 
   const onMediaLoad = (event) => {

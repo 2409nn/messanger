@@ -54,17 +54,7 @@ const chatMenuBtns = [
     }},
 ]
 
-const createBtns = [
-  {title: "New group", onClickFn: () => {
-      console.log("Group create")
-    }},
-  {title: "New channel", onClickFn: () => {
-    console.log("Channel create")
-    }},
-  {title: "Start live", onClickFn: () => {
-      console.log("live start")
-    }}
-]
+const mainMenuBtns = []
 
 const contextMessageBtns = [
   {title: "Reply", onClickFn: () => {
@@ -186,7 +176,7 @@ function handleContextMenu (event) {
   />
 
   <contextMenu :buttons=contextMessageBtns :position=pos v-if="contextElement" :element=contextElement ref="contextDOM" />
-  <drop-menu :buttons='isChatOpen ? chatMenuBtns : createBtns' v-if="isBurgerOpen" :position=pos ref="burgerDOM" />
+  <drop-menu :buttons='isChatOpen ? chatMenuBtns : mainMenuBtns' v-if="isBurgerOpen" :position=pos ref="burgerDOM" />
 
   <mobileHeader
       :search=true
@@ -194,6 +184,8 @@ function handleContextMenu (event) {
       :title="isChatOpen ? activeChat.firstname : ''"
       :burger-menu="true"
       :call="isChatOpen"
+      :create-btn="true"
+      @create-clicked="handleCreateClick"
       @search-clicked="handleUpdateSearch"
       @burger-clicked="handleUpdateDropMenu"
       @close-clicked="handleUpdateCloseBtn"

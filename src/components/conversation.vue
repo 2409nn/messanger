@@ -5,14 +5,18 @@
   import emptyState from "@/components/emptyState.vue"
   import mediaSender from "@/components/mediaSender.vue"
   import mediaPlayer from "@/components/mediaPlayer.vue"
+  import bottomScroller from "@/components/bottomScroller.vue"
 
   const isMediaSender = ref(false);
   const isMediaPlayer = ref(false);
+  const isVideo = ref(false);
 
   const mediaMessage = ref(null); // объект выбранного медиа + текст
   const selectedMedia = ref(null); // объект выбранного медиа
   const previewMedia = ref(null); // только URL
   const mediaText = ref('');
+
+  const currentScroll = ref(0);
 
   const emit = defineEmits(['burgerClicked', 'audioCallClicked', 'videoCallClicked']);
   const props = defineProps({
@@ -29,9 +33,10 @@
 
   const onFileSelected = (event) => {
     const file = event.target.files[0];
-    if (file.type.startsWith("image/")) {
+    if (file.type.startsWith("image/") || file.type.startsWith("video/")) {
       isMediaSender.value = true;
       selectedMedia.value = file;
+      isVideo.value = file.type.startsWith("video/");
       previewMedia.value = URL.createObjectURL(file);
     }
 
@@ -75,7 +80,19 @@
         { time: '09:15', avatar: userAvatar1, title: 'Ope', text: 'Good morning! I finally met that person I was telling you about. She is absolutely incredible.' },
         { time: '09:42', avatar: userAvatar2, title: 'Me', text: 'That’s great news! I’ve been waiting for this update. Give me the details.' },
         { time: '10:05', avatar: userAvatar1, title: 'Ope', text: 'Let’s grab a drink after work, and I’ll tell you everything. She might even join us later.' },
-        { time: '12:30', avatar: userAvatar2, title: 'Me', text: 'Sounds like a plan. Just text me the location when you’re heading out.' }
+        { time: '12:30', avatar: userAvatar2, title: 'Me', text: 'Sounds like a plan. Just text me the location when you’re heading out.' },
+        { time: '09:15', avatar: userAvatar1, title: 'Ope', text: 'Good morning! I finally met that person I was telling you about. She is absolutely incredible.' },
+        { time: '09:42', avatar: userAvatar2, title: 'Me', text: 'That’s great news! I’ve been waiting for this update. Give me the details.' },
+        { time: '10:05', avatar: userAvatar1, title: 'Ope', text: 'Let’s grab a drink after work, and I’ll tell you everything. She might even join us later.' },
+        { time: '12:30', avatar: userAvatar2, title: 'Me', text: 'Sounds like a plan. Just text me the location when you’re heading out.' },
+        { time: '09:15', avatar: userAvatar1, title: 'Ope', text: 'Good morning! I finally met that person I was telling you about. She is absolutely incredible.' },
+        { time: '09:42', avatar: userAvatar2, title: 'Me', text: 'That’s great news! I’ve been waiting for this update. Give me the details.' },
+        { time: '10:05', avatar: userAvatar1, title: 'Ope', text: 'Let’s grab a drink after work, and I’ll tell you everything. She might even join us later.' },
+        { time: '12:30', avatar: userAvatar2, title: 'Me', text: 'Sounds like a plan. Just text me the location when you’re heading out.' },
+        { time: '09:15', avatar: userAvatar1, title: 'Ope', text: 'Good morning! I finally met that person I was telling you about. She is absolutely incredible.' },
+        { time: '09:42', avatar: userAvatar2, title: 'Me', text: 'That’s great news! I’ve been waiting for this update. Give me the details.' },
+        { time: '10:05', avatar: userAvatar1, title: 'Ope', text: 'Let’s grab a drink after work, and I’ll tell you everything. She might even join us later.' },
+        { time: '12:30', avatar: userAvatar2, title: 'Me', text: 'Sounds like a plan. Just text me the location when you’re heading out.' },
       ]
     },
     user_2: {
@@ -115,10 +132,13 @@
   const typedText = ref('');
   const chatDOM = ref(null);
 
-  const scrollToBottom = async () => {
+  const scrollToBottom = async (isInitial) => {
     await nextTick();
     if (chatDOM.value) {
-      chatDOM.value.scrollTop = chatDOM.value.scrollHeight;
+      chatDOM.value.scrollTo({
+        top: chatDOM.value.scrollHeight,
+        behavior: isInitial ? 'instant' : 'smooth', // если первоначальная загрузка, то скролл instant
+      })
     }
   }
 
@@ -145,16 +165,37 @@
 
   }
 
-  watch(() => currentMessages.value.length, () => {
-    scrollToBottom();
+  // получение значения скролла с низа
+  const onChatScroll = (event) => {
+    currentScroll.value = event.target.scrollHeight - event.target.clientHeight - event.target.scrollTop;
+  }
+
+  // Следим за сменой активного чата
+  watch(() => props.activeChat?.index, (newVal) => {
+    if (newVal) {
+      // При смене чата — прыгаем мгновенно
+      scrollToBottom(true);
+    }
+  });
+
+  // Следим за новыми сообщениями внутри чата
+  watch(() => currentMessages.value.length, (newVal, oldVal) => {
+    // Если сообщений стало больше (пришло новое) — скроллим плавно
+    // Если массив сбросился или это первая загрузка — мгновенно
+    const isNewMessage = oldVal !== 0 && newVal > oldVal;
+    if (currentScroll < 150) {
+      scrollToBottom(!isNewMessage); // если пользователь скроллит выше, новое сообщение не сбросит его вниз
+      };
   });
 
 </script>
 
 <template>
 
-  <mediaSender @on-media-send="handleMediaSend" :class="{'active': isMediaSender}" v-model:is-popup-visible="isMediaSender" :media="previewMedia" />
-  <mediaPlayer :class="{'active': isMediaPlayer}" v-model:is-popup-visible="isMediaPlayer" :media="previewMedia" :media-text="mediaText" />
+  <mediaSender @on-media-send="handleMediaSend" :class="{'active': isMediaSender}" v-model:is-popup-visible="isMediaSender" :media="previewMedia" :is-video="isVideo" />
+  <mediaPlayer :class="{'active': isMediaPlayer}" v-model:is-popup-visible="isMediaPlayer" :media="previewMedia" :media-text="mediaText" :is-video="f" />
+
+  <bottom-scroller :elementDOM="chatDOM" v-if="currentScroll > 150" />
 
   <section class="conv" :class="{'active': isChatOpen}" >
     <div class="conv__heading heading" v-if="activeChat">
@@ -187,10 +228,10 @@
         </button>
       </div>
     </div>
-    <div class="conv__chat" v-if="activeChat" ref="chatDOM">
+    <div class="conv__chat" v-if="activeChat" ref="chatDOM" @scroll="onChatScroll">
       <div class="conv__messages">
 
-        <div class="conv__message" v-for="message in currentMessages">
+        <div class="conv__message" v-for="message in currentMessages" :class="{'own': message.title.toLocaleLowerCase() === 'me'}">
           <img :src="message.avatar" alt="avatar" class="conv__message-avatar">
 
           <div class="conv__message__info">
@@ -199,6 +240,8 @@
               <span class="conv__message__info-top__time">{{ message.time }}</span>
             </div>
             <img class="conv__message-media" v-if="message.media" :src="message.media" @click="isMediaPlayer = true">
+            <video class="conv__message-media" preload="metadata" v-if="message.media" :src="message.media" @click="isMediaPlayer = true"></video>
+<!--            <p class="conv__message__info__video-length">{{ message.media.duration }}</p>-->
             <p class="conv__message__info__text">{{ message.text }}</p>
           </div>
         </div>
@@ -281,7 +324,6 @@
 
     &__chat {
       overflow-y: scroll;
-      scroll-behavior: smooth;
       scrollbar-width: none;
       -ms-overflow-style: none;
 
