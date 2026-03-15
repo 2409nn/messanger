@@ -29,7 +29,7 @@ defineEmits(['update:modelValue']);
 <template>
 
 
-  <label class="toggle-switch" :class="{ 'is-disabled': disabled, 'is-primary': primary }">
+  <label class="toggle-switch" :class="{ 'is-disabled': disabled, 'is-primary': primary}">
 
     <span v-if="label" class="label-text">{{ label }}</span>
 

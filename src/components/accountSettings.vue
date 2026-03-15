@@ -6,7 +6,7 @@
 
   // доступ к localStorage через Pinia
   import { useSettingsStore } from '@/stores/settings.js'
-  const settingsStore = useSettingsStore();
+  const settings = useSettingsStore().settings;
 
   const emit = defineEmits(['update:isPopupVisible', 'update:isDark']);
 
@@ -17,7 +17,7 @@
   const bio = ref('Developer of Nuclear');
   const personalityForm = ref(null);
 
-  const isDark = settingsStore.settings.darkMode;
+  const isDark = ref(false);
 
   const props = defineProps({
     isPopupVisible: {
@@ -58,10 +58,9 @@
     emit("update:isPopupVisible", false);
   }
 
-  const toggleDark = () => {
-    settingsStore.settings.darkMode = !isDark;
-    console.log(settingsStore.settings.darkMode);
-    document.getElementById("app").setAttribute('data-theme', settingsStore.settings.darkMode ? 'dark' : 'light');
+  const toggleDark = (isActive) => {
+    settings.darkMode = isActive;
+    document.getElementById("app").setAttribute('data-theme', isActive ? 'dark' : 'light');
   }
 
   const onMediaLoad = (event) => {
@@ -155,13 +154,19 @@
           <ul class="accountSettings__preferences__list" v-if="isOpen.privacy">
 
             <li class="accountSettings__preferences__list-item">
-              <toggle-button class="accountSettings__preferences__list-btn" :model-value=true label="Show last seen & online"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn"
+                             @update:model-value="(isActive) => { settings.showLastOnline = isActive }"
+                             :model-value='settings.showLastOnline' label="Show last seen & online"></toggle-button>
             </li>
             <li class="accountSettings__preferences__list-item">
-              <toggle-button class="accountSettings__preferences__list-btn" label="Let other users see your profile photos"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn" label="Let other users see your profile photos"
+                             @update:model-value="(isActive) => { settings.showProfilePhotos = isActive }"
+                             :model-value='settings.showProfilePhotos'></toggle-button>
             </li>
             <li class="accountSettings__preferences__list-item">
-              <toggle-button class="accountSettings__preferences__list-btn" label="Screen bio other users"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn" label="Show bio other users"
+                             @update:model-value="(isActive) => { settings.showBio = isActive }"
+                             :model-value='settings.showBio'></toggle-button>
             </li>
 
           </ul>
@@ -180,7 +185,10 @@
           <ul class="accountSettings__preferences__list" v-if="isOpen.notification">
 
             <li class="accountSettings__preferences__list-item">
-              <toggle-button class="accountSettings__preferences__list-btn" :model-value=true label="Sound new messages"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn"
+                             :model-value=settings.notifications
+                             @update:model-value="(isActive) => {settings.notifications = isActive}"
+                             label="Sound new messages"></toggle-button>
             </li>
 
           </ul>
@@ -196,8 +204,8 @@
           <ul class="accountSettings__preferences__list" v-if="isOpen.theme">
 
             <li class="accountSettings__preferences__list-item">
-              <toggle-button class="accountSettings__preferences__list-btn" label="Dark mode" @update:modelValue="toggleDark"></toggle-button>
-              <toggle-button class="accountSettings__preferences__list-btn" label="Automatically switch theme"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn" @update:model-value="toggleDark" label="Dark mode" :model-value="settings.darkMode"></toggle-button>
+              <toggle-button class="accountSettings__preferences__list-btn" @update:model-value="(isActive) => {settings.autoSwitchTheme = isActive}" label="Automatically switch theme"></toggle-button>
             </li>
 
           </ul>

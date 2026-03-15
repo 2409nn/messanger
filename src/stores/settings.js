@@ -3,10 +3,13 @@ import { ref } from "vue"
 
 export const useSettingsStore = defineStore("settings", () => {
     const settings = ref({
-        darkMode: true,
+        darkMode: false,
         autoSwitchTheme: true,
         notifications: true,
         showLastOnline: true,
+        showProfilePhotos: true,
+        showBio: true,
+
     });
 
     return { settings };

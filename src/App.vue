@@ -1,7 +1,12 @@
 <script setup>
-  import reg from "./views/reg.vue"
-  import home from "./views/home.vue"
-  import router from "./router/index.js"
+  import { useSettingsStore } from "@/stores/settings.js";
+
+  const loadAccountSettings = async () => {
+    const settings = useSettingsStore().settings;
+    document.getElementById("app").setAttribute('data-theme', settings.darkMode ? 'dark' : 'light');
+  }
+
+  loadAccountSettings()
 
 </script>
 

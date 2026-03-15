@@ -13,7 +13,10 @@
   const formDOM = ref(null);
   const emit = defineEmits(['update:isPopupVisible', 'callAlert', 'createdData']);
 
+  const spaceName = ref('');
+  const spaceDescription = ref('');
   const selectedMembers = ref([]);
+  const togglesActive = ref(false);
 
   const handleSwitch = (payload) => {
     activeTab.value = payload
@@ -24,26 +27,26 @@
   }
   const onCreateClick = () => {
     if (formDOM.value) {
-
-      const inputs = formDOM.value.querySelectorAll("input");
       // небольшая валидация на пустые поля
-
-      let isEmpty = false;
-      inputs.forEach(input => {
-        isEmpty = String(input.value).trim().length === 0;
-      })
+      let isEmpty = spaceName.value.length === 0 && spaceDescription.value.length === 0;
 
       if (isEmpty) {
         emit("callAlert", "Fields cannot be empty, please fill the fields");
       }
+
       else {
         const data = {
           title: formDOM.value.querySelector("#createWindow__space-name").value,
           description: formDOM.value.querySelector("#createWindow__space-description").value,
-          members: formDOM.value.querySelectorAll(".createWindow__contact"), // сделать так чтобы участники были вписаны в список
-
+          members: selectedMembers.value,
         }
-        emit('createdData', data)
+
+        emit('createdData', data);
+        // очистка полей
+        spaceName.value = "";
+        spaceDescription.value = "";
+
+        emit("update:isPopupVisible", false);
       }
     }
   }
@@ -73,10 +76,10 @@
     <form class="createWindow__form" ref="formDOM" @submit.prevent="">
 
       <label class="createWindow__label" for="createWindow__space-name">Name</label>
-      <input placeholder="Type name here..." type="text" id="createWindow__space-name">
+      <input placeholder="Type name here..." type="text" id="createWindow__space-name" v-model="spaceName">
 
       <label class="createWindow__label" for="createWindow__space-description">Description</label>
-      <textarea id="createWindow__space-description" placeholder="Type description here..."></textarea>
+      <textarea id="createWindow__space-description" placeholder="Type description here..." v-model="spaceDescription"></textarea>
 
       <toggleList title="Members" @click="contactsOpen = !contactsOpen">
       </toggleList>
@@ -84,7 +87,7 @@
       <ul class="createWindow__contacts" v-if="contactsOpen">
         <li class="createWindow__contact" v-for="contact in contacts">
           <img :src="contact.avatar" alt="avatar" class="createWindow__contact-avatar">
-          <toggle-button :label="contact.firstname" class="createWindow__contact-button"/>
+          <toggle-button :label="contact.firstname" :model-value="togglesActive" @update:modelValue="selectedMembers.push(contact)" class="createWindow__contact-button"/>
         </li>
       </ul>
 

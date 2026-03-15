@@ -150,6 +150,9 @@ function handleContextMenu (event) {
   }
 }
 
+function handleCreatedData (payload) {
+  console.log(payload);
+}
 
 
 </script>
@@ -168,6 +171,7 @@ function handleContextMenu (event) {
   <createWindow
       :class="{'active': isCreateOpen}"
       @call-alert="handleCallAlert"
+      @created-data="handleCreatedData"
       v-model:is-popup-visible="isCreateOpen"/>
 
   <account-settings
