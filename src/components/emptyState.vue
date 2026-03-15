@@ -18,7 +18,7 @@
         <path d="M51.2337 110.971L122.6 131.971" stroke="currentColor" stroke-width="14" stroke-linecap="round"/>
       </g>
       <defs>
-        <clipPath id="clip0_178_227">
+        <clipPath>
           <rect width="195" height="195" fill="white"/>
         </clipPath>
       </defs>

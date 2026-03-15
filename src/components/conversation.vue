@@ -125,7 +125,7 @@
   const onSubmitClick = () => {
 
     // проверка на пустое сообщение
-    if (typedText.value.length > 0) {
+    if (typedText.value.trim().length > 0) {
       const now = new Date();
       const user = {id: 1488, firstname: "Iskanderious", avatar: userAvatar2}; // Переписать когда подключу firebase
       const time = `${now.getHours()}:${now.getMinutes()}`;

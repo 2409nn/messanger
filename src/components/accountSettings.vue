@@ -1,10 +1,17 @@
 <script setup>
   import toggleList from "./toggleList.vue"
   import toggleButton from "./toggleButton.vue"
-  import { ref } from 'vue'
+  import { ref, reactive } from 'vue'
   import profile_default from '../assets/imgs/avatars/profile_default.png'
 
   const emit = defineEmits(['update:isPopupVisible', 'update:isDark']);
+
+  const previewMedia = ref('https://avatars2.githubusercontent.com/u/55?v=4'); // только URL
+  const userName = ref('iskanderious');
+  const firstName = ref('Iskander');
+  const lastName = ref('');
+  const bio = ref('Developer of Nuclear');
+  const personalityForm = ref(null);
 
   const isDark = ref(false);
 
@@ -35,12 +42,13 @@
     }
   };
 
-  const userData = {
-    username: 'aufderheidebluhterika',
-    fistname: 'Iskander',
-    lastname: 'Abdullayev',
-    avatar: 'https://avatars2.githubusercontent.com/u/55?v=4',
-  }
+  const userData = reactive({
+    username: userName.value,
+    firstname: firstName.value,
+    lastname: lastName.value,
+    bio: bio.value,
+    avatar: previewMedia.value,
+  });
 
   const closeButton = () => {
     emit("update:isPopupVisible", false);
@@ -49,6 +57,23 @@
   const toggleDark = () => {
     isDark.value = !isDark.value;
     document.getElementById("app").setAttribute('data-theme', isDark.value ? 'dark' : 'light');
+  }
+
+  const onMediaLoad = (event) => {
+    const file = event.target.files[0];
+    if (file.type.startsWith('image/')) {
+      userData.avatar = URL.createObjectURL(file);
+    }
+  }
+
+  const onSaveChanges = () => {
+    previewMedia.value = personalityForm.value.querySelectorAll('.accountSettings__input-avatar').value;
+    firstName.value = personalityForm.value.querySelector('#first-name').value;
+    userName.value = personalityForm.value.querySelector('#username').value;
+    lastName.value = personalityForm.value.querySelectorAll('#last-name').value;
+    bio.value = personalityForm.value.querySelectorAll('#bio').value;
+
+    console.log(firstName.value);
   }
 
 </script>
@@ -76,42 +101,42 @@
             <img :src="userData.avatar ? userData.avatar : profile_default" alt="profile" style="width: 40px; height: 40px; border-radius: 50%;">
 
             <div class="accountSettings__preferences-personality__name" style="display: grid; grid-template-rows: repeat(2, 1fr); grid-template-columns: 1fr">
-              <p style="grid-row: 1; text-align: left; font-weight: 500; font-size: 16px" v-if="userData.fistname" class="accountSettings__preferences-personality__fullname">{{ userData.fistname }} {{userData.lastname }}</p>
+              <p style="grid-row: 1; text-align: left; font-weight: 500; font-size: 16px" v-if="userData.firstname" class="accountSettings__preferences-personality__fullname">{{ userData.firstname }} {{userData.lastname }}</p>
               <p style="grid-row: 2; text-align: left; font-weight: 400;" v-if="userData.username" class="accountSettings__preferences-personality__username">@{{ userData.username }}</p>
             </div>
 
           </toggle-list>
 
-          <form @submit.prevent="" action="" class="accountSettings__preferences-personality__form" v-if="isOpen.personality">
+          <form ref="personalityForm" @submit.prevent="" action="" class="accountSettings__preferences-personality__form" v-if="isOpen.personality">
             <div class="form-row-top">
               <div class="avatar-upload">
                 <label for="accountSettings__input-avatar" style="height: 100%; width: 100%; padding: 10px; align-content: center">Click to Upload image</label>
-                <input id="accountSettings__input-avatar" type="file" hidden>
+                <input id="accountSettings__input-avatar" type="file" @change="onMediaLoad" hidden>
               </div>
 
               <div class="names-column">
                 <div class="form-group">
                   <label for="first-name">First name:</label>
-                  <input type="text" id="first-name" placeholder="Type your firstname...">
+                  <input type="text" :value="userData.firstname" id="first-name" placeholder="Type your firstname...">
                 </div>
                 <div class="form-group">
                   <label for="last-name">Last name:</label>
-                  <input type="text" id="last-name" placeholder="Type your firstname...">
+                  <input type="text" :value="userData.lastname"  id="last-name" placeholder="Type your lastname...">
                 </div>
               </div>
             </div>
 
             <div class="form-group">
               <label for="username">Username:</label>
-              <input type="text" id="username" placeholder="Type username to find you...">
+              <input class="accountSettings__input-username" type="text" id="username" :value="userData.username" placeholder="Type username to find you...">
             </div>
 
             <div class="form-group">
               <label for="bio">Bio:</label>
-              <textarea id="bio" placeholder="Type something, for example: my name is Iskander, I’m from Almaty city..."></textarea>
+              <textarea id="bio" :value="userData.bio" placeholder="Type something, for example: my name is Iskander, I’m from Almaty city..."></textarea>
             </div>
 
-            <button type="submit" class="submit-btn">Save changes</button>
+            <button type="submit" class="submit-btn" @click="onSaveChanges">Save changes</button>
           </form>
         </div>
 

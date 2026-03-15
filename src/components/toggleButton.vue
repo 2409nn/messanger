@@ -1,5 +1,6 @@
 <script setup>
 
+import { ref } from "vue"
 
 defineProps({
   modelValue: {
@@ -36,6 +37,7 @@ defineEmits(['update:modelValue']);
         type="checkbox"
         :checked="modelValue"
         :disabled="disabled"
+
         @change="$emit('update:modelValue', $event.target.checked)"
     />
     <span class="slider"></span>

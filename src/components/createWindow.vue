@@ -13,6 +13,8 @@
   const formDOM = ref(null);
   const emit = defineEmits(['update:isPopupVisible', 'callAlert', 'createdData']);
 
+  const selectedMembers = ref([]);
+
   const handleSwitch = (payload) => {
     activeTab.value = payload
   }
@@ -38,10 +40,10 @@
         const data = {
           title: formDOM.value.querySelector("#createWindow__space-name").value,
           description: formDOM.value.querySelector("#createWindow__space-description").value,
-          members: formDOM.value.querySelectorAll(".createWindow__contact"),
+          members: formDOM.value.querySelectorAll(".createWindow__contact"), // сделать так чтобы участники были вписаны в список
 
         }
-        emit('createdData', )
+        emit('createdData', data)
       }
     }
   }
@@ -80,9 +82,9 @@
       </toggleList>
 
       <ul class="createWindow__contacts" v-if="contactsOpen">
-        <li class="createWindow__contact" v-for="contact in contacts" >
+        <li class="createWindow__contact" v-for="contact in contacts">
           <img :src="contact.avatar" alt="avatar" class="createWindow__contact-avatar">
-          <toggle-button :label="contact.firstname" class="createWindow__contact-button" />
+          <toggle-button :label="contact.firstname" class="createWindow__contact-button"/>
         </li>
       </ul>
 

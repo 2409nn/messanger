@@ -69,10 +69,12 @@ watch(() => props.isActive, (newVal) => {
   &__title {
     font-size: 18px;
     padding-bottom: 20px;
+    color: var(--main-text-color);
   }
 
   &__text {
     font-size: 12px;
+    color: var(--secondary-text-color);
   }
 
   &__buttons {
